@@ -1,0 +1,50 @@
+@import (reference) '../../styles/custom.less';
+@import (reference) '../../styles/mixins.less';
+
+.Follow {
+  .btn;
+  .btn-primary;
+
+  .colorize-button(@primary-color, @primary-button-border);
+
+  color: @white-darker;
+
+  & > .anticon {
+    margin-right: 12px;
+  }
+}
+
+.Follow--secondary {
+  color: @primary-color !important;
+  background-color: transparent !important;
+  border-width: @border-width-base;
+  border-color: @primary-color !important;
+
+  &:hover {
+    background-color: transparent !important;
+  }
+}
+
+.Follow--danger {
+  color: @white !important;
+  .colorize-button(@red, @red);
+}
+
+.opened_eyes {
+  //background-image: url("/images/icons/opened_eyes.png");
+  width: 34px;
+  padding-bottom: 4px;
+}
+.closed_eyes {
+  width: 34px;
+  padding-bottom: 4px;
+}
+
+.eyes {
+  width: 34px;
+  padding-bottom: 4px;
+}
+
+.UserHeader__user .Follow {
+  background-color: white !important;
+}
