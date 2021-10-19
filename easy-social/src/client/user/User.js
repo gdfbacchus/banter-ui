@@ -159,7 +159,7 @@ export default class User extends React.Component {
     }
 
 
-    const busyHost = 'https://test.banter.gg';
+    const busyHost = 'https://banter.network';
     const desc = profile.about || `Posts by ${username}`;
     const image = getAvatarURL(username) || '/images/logo.png';
     const canonicalUrl = `${busyHost}/@${username}`;

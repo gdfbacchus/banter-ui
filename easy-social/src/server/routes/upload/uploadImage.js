@@ -19,7 +19,7 @@ const  upload = (req,res) => {
     const path = req.file.path;
     console.log("File is uploaded, url : " + path);
 
-    const finalPostImgPath = 'https://test.banter.gg/'+req.file.filename
+    const finalPostImgPath = 'https://banter.network/'+req.file.filename
     console.log("finalPostImgPath url : " + finalPostImgPath);
 
     /*Now do where ever you want to do*/

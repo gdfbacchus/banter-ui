@@ -50,7 +50,7 @@ export default function withEditor(WrappedComponent) {
       //   body: formData,
       // })
       // const uploadEndpoint = 'http://localhost:3000/es-api/v0/upload';
-      const uploadEndpoint = 'https://test.banter.gg/es-api/v0/upload';
+      const uploadEndpoint = 'https://banter.network/es-api/v0/upload';
 
       fetch(uploadEndpoint, {
         method: 'POST',

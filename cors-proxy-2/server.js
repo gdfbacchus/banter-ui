@@ -24,7 +24,7 @@ app.all('*', function (req, res, next) {
         var targetURL = req.header('Target-URL');
 				console.log("targetURL: ",targetURL);
 				if(!targetURL) {
-          res.set('Target-URL', 'https://node.banter.gg')
+          res.set('Target-URL', 'https://node.banter.network')
         }
         console.log("REQUEST HEADERS: ",req.headers);
         // targetURL = req.header('Target-URL');

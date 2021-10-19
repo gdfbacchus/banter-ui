@@ -197,11 +197,11 @@ class PostContent extends React.Component {
     if (isBannedPost(content)) return <DMCARemovedMessage className="center" />;
 
     const postMetaData = jsonParse(content.json_metadata);
-    const busyHost = 'https://test.banter.gg';
+    const busyHost = 'https://banter.network';
     let canonicalHost = busyHost;
 
     if (postMetaData && _.indexOf(postMetaData.app, 'steemit') === 0) {
-      canonicalHost = 'https://test.banter.gg';
+      canonicalHost = 'https://banter.network';
     }
 
     const userVote = _.find(content.active_votes, { voter: user.name }) || {};
