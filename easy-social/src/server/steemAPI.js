@@ -4,7 +4,7 @@ const createClient = require('lightrpc').createClient;
 // const url = process.env.STEEMJS_URL || 'http://79.143.179.62:8080';
 // const url = process.env.STEEMJS_URL || 'http://localhost:8080';
 // const url = process.env.STEEMJS_URL || 'http://79.143.179.62:8282';//PROXY
-const url = process.env.STEEMJS_URL || 'https://proxy.banter.gg';//PROXY
+const url = process.env.STEEMJS_URL || 'https://proxy.banter.network';//PROXY
 console.log('Server steemAPI process.env.STEEMJS_URL: ',process.env.STEEMJS_URL);
 console.log('Server steemAPI URL: ',url);
 const client = createClient(url);

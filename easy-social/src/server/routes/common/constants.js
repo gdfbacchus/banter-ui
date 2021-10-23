@@ -19,7 +19,7 @@ module.exports = {
     // CHAIN_ID: "45617379536f6369616c580600000000b82c580600000000402082b0fe7f0000",//OLD
     CHAIN_ID: "4ff15a093f2777fd61a9381fc62dfb3fd54e3770494afcfb392a51352715b4e9",
     // API_ADDRESS: "http://79.143.179.62:8080",
-    API_ADDRESS: "https://node.banter.gg",
+    API_ADDRESS: "https://node.banter.network",
     CREATION_ACCOUNT_FEE: "5.000 SOCIAL"
   }
 

@@ -9,7 +9,7 @@ export const knownDomains = [
   // 'utopian.io',
   // 'coinmarketcap.com',
   // 'youtube.com',
-  'test.banter.gg',
+  'banter.network',
   'easydex.net',
   'exchange.easydex.net',
   'ezlife.io/',

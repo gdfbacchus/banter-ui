@@ -9,7 +9,7 @@ const options = {
 // const steemUrl = process.env.STEEMJS_URL || 'http://localhost:8080';
 // const steemUrl = process.env.STEEMJS_URL || 'http://79.143.179.62:8282';//PROXY
 // const steemUrl = process.env.STEEMJS_URL || 'https://proxy.easysocial.life';//PROXY
-const easysocialUrl = process.env.STEEMJS_URL || 'https://proxy.banter.gg';//PROXY
+const easysocialUrl = process.env.STEEMJS_URL || 'https://proxy.banter.network';//PROXY
 
 // console.log('Client steemAPI process.env.STEEMJS_URL: ',process.env.STEEMJS_URL);
 // console.log("Client steemUrl: ", steemUrl);
