@@ -14,11 +14,11 @@ import { getBrowserLocale, loadLanguage } from './translations';
 import { setUsedLocale } from './app/appActions';
 import { getLocale } from './reducers';
 
-import willTransitionTo from "./account/loginBts/routerTransition";
+// import willTransitionTo from "./account/loginBts/routerTransition";
 
-willTransitionTo(true,()=>{}).then(()=>{
-  //console.log("willTransitionTo [Index]")
-});
+// willTransitionTo(true,()=>{}).then(()=>{
+//   //console.log("willTransitionTo [Index]")
+// });
 
 try{
 
