@@ -45,63 +45,63 @@ export const login = (accountName, password) => (dispatch, getState, { steemAPI 
               payload: {}
             })//.catch(() => dispatch(loginError()));
           }
+        })
+        //console.log("Get bts account counter: ",counter);
+        /*  let acc = ChainStore.getAccount(accountName);
+         if(acc){
+           //console.log("Found BTS Account: ",acc);
+           //console.log("---------------------------------");
+           clearInterval(id);
 
-          //console.log("Get bts account counter: ",counter);
-         /*  let acc = ChainStore.getAccount(accountName);
-          if(acc){
-            //console.log("Found BTS Account: ",acc);
-            //console.log("---------------------------------");
-            clearInterval(id);
+           let isLocked1 = WalletDb.isLocked();
+           //console.log("is locked before login: ", isLocked1)
+           //TODO TRY TO LOG IN
+           WalletDb.validatePassword(
+             password || "",
+             true, //unlock
+             accountName
+           ).then(({success, cloudMode})=>{
+             // console.log("MARKER success: ",success);
+             // console.log("cloudMode: ",cloudMode);
+             let isLocked = WalletDb.isLocked();
+             // console.log("is locked after login: ", isLocked)
+             if (isLocked) {
+               // this.setState({passwordError: true});
+               console.log("Login error.");
+               return dispatch({
+                 type: TYPES.LOGIN_ERROR,
+                 payload: {}
+               })//.catch(() => dispatch(loginError()));
+             } else if(!isLocked){
+               console.log("Account[" + accountName + "] is logged in.");
 
-            let isLocked1 = WalletDb.isLocked();
-            //console.log("is locked before login: ", isLocked1)
-            //TODO TRY TO LOG IN
-            WalletDb.validatePassword(
-              password || "",
-              true, //unlock
-              accountName
-            ).then(({success, cloudMode})=>{
-              // console.log("MARKER success: ",success);
-              // console.log("cloudMode: ",cloudMode);
-              let isLocked = WalletDb.isLocked();
-              // console.log("is locked after login: ", isLocked)
-              if (isLocked) {
-                // this.setState({passwordError: true});
-                console.log("Login error.");
-                return dispatch({
-                  type: TYPES.LOGIN_ERROR,
-                  payload: {}
-                })//.catch(() => dispatch(loginError()));
-              } else if(!isLocked){
-                console.log("Account[" + accountName + "] is logged in.");
+               dispatch({
+                 type: GET_FOLLOWING,
+                 meta: accountName,
+                 payload: {
+                   promise: getAllFollowing(accountName),
+                 },
+               });
+               //user: action.payload.account || state.user,
+               //userSCMetaData: action.payload.user_metadata,
+               return dispatch({
+                 type: TYPES.LOGIN_SUCCESS,
+                 payload: {
+                   account: resp[0],
+                   user_metadata:{}
+                 }
+               })//.catch(() => dispatch(loginError()));
 
-                dispatch({
-                  type: GET_FOLLOWING,
-                  meta: accountName,
-                  payload: {
-                    promise: getAllFollowing(accountName),
-                  },
-                });
-                //user: action.payload.account || state.user,
-                //userSCMetaData: action.payload.user_metadata,
-                return dispatch({
-                  type: TYPES.LOGIN_SUCCESS,
-                  payload: {
-                    account: resp[0],
-                    user_metadata:{}
-                  }
-                })//.catch(() => dispatch(loginError()));
-
-              }
-            });
-          }
-          //console.log("=================================");
-          counter++;
-        },100); */
+             }
+           });
+         }
+         //console.log("=================================");
+         counter++;
+       },100); */
 
       } else {
         console.log("There is no such account: ",resp)
-      } 
+      }
     })
     .catch((err)=>{
       console.log("ERROR: ",err)
