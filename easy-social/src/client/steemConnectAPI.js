@@ -1,6 +1,7 @@
-import sc2 from 'sc2-sdk';
+// import sc2 from 'sc2-sdk';
+import steemconnect from 'steemconnect';
 
-const api = sc2.Initialize({
+const api = steemconnect.Initialize({
   app: process.env.STEEMCONNECT_CLIENT_ID,
   baseURL: process.env.STEEMCONNECT_HOST,
   callbackURL: process.env.STEEMCONNECT_REDIRECT_URL,
