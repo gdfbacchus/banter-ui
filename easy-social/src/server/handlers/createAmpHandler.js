@@ -2,7 +2,7 @@ import url from 'url';
 import steemAPI from '../steemAPI';
 import renderAmpPage from '../renderers/ampRenderer';
 
-const debug = require('debug')('busy:server');
+// const debug = require('debug')('busy:server');
 
 export default function createAmpHandler(template) {
   return async function ampResponse(req, res) {
@@ -20,7 +20,8 @@ export default function createAmpHandler(template) {
       const page = renderAmpPage(result, appUrl, template);
       return res.send(page);
     } catch (error) {
-      debug('Error while parsing AMP response', error);
+      console.error('[ES] error:: ', error);
+      // debug('Error while parsing AMP response', error);
       return res.status(500).send('500 Internal Server Error');
     }
   };
