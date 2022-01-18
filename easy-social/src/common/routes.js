@@ -27,6 +27,7 @@ import Error401 from '../client/statics/Error401';
 import ExitPage from '../client/statics/ExitPage';
 import LoginPage from '../client/account/LoginPage.js'
 import RegistrationPage from '../client/account/RegistrationPage'
+import JitsiVideo from  '../client/video/JitsiVideo.js';
 
 const routes = [
   {
@@ -36,6 +37,10 @@ const routes = [
         path: '/bookmarks',
         exact: true,
         component: Bookmarks,
+      },{
+        path: '/video',
+        exact: true,
+        component: JitsiVideo,
       },
       {
         path: '/drafts',
