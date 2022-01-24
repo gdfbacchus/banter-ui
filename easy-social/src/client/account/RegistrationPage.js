@@ -137,9 +137,6 @@ export default class RegistrationPage extends React.Component {
 
   }
 
-  _initBtsCallBack(status) {
-
-  }
   componentDidMount() {
     /*
     if(!Apis.instance().db_api()){
@@ -298,14 +295,12 @@ export default class RegistrationPage extends React.Component {
               {!this.props.regStatus || this.props.regStatus === 'error'?
               <div className="Settings__section">
                 <div className="Invite__input-container">
+                  {/*ACCOUNT NAME*/}
                   <Form.Item
                     label={
                         <span className="Editor__label">
-                          Account name - to register use any bitshares web account based username up to 16 symbols.
+                          Account name - to register use account based username up to 16 symbols.
                         </span>
-
-
-
                     }
                   >
                     <Input
@@ -318,19 +313,17 @@ export default class RegistrationPage extends React.Component {
                     />
                     {!this.props.availableAccountName && this.state.accountName.length > 0 ?
                       <div>
-                        <div style={{color:"red"}}>Account name is already taken, or it is unavailable.
-                        </div>
-                        <div>
-                          To register simply log in with your Bitshares account.<br />
-                          If you don't have a Bitshares account or would like to start a new one click <a href="https://exchange.easydex.net/create-account/password" target="_blank" style={{fontWeight: 700}}>here</a>.
+                        <div style={{color:"red"}}>
+                          Account name is already taken, or it is unavailable.
                         </div>
                       </div>: null}
                   </Form.Item>
 
+                  {/*PASSWORD*/}
                   <Form.Item
                     label={
                       <span className="Editor__label">
-                      Password - your bitshares wallet password
+                      Password
                     </span>
                     }
                   >
@@ -347,6 +340,7 @@ export default class RegistrationPage extends React.Component {
                       </div> : null}
                   </Form.Item>
 
+                  {/*CONFIRM PASSWORD*/}
                   <Form.Item
                     label={
                       <span className="Editor__label">

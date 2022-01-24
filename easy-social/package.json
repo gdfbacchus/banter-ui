@@ -19,6 +19,11 @@
     "dev": "node ./scripts/start.js",
     "build": "node ./scripts/build.js",
     "start": "node ./build/server.js",
+
+    "dev2": "NODE_ENV=development PORT=4000 STEEMJS_URL=https://proxy.banter.network node ./scripts/start.js",
+    "build2": "NODE_ENV=production STEEMJS_URL=https://proxy.banter.network node ./scripts/build.js",
+    "start2": "NODE_ENV=production PORT=4000 STEEMJS_URL=https://proxy.banter.network node ./build/server.js",
+
     "storybook": "start-storybook -p 9001 -c .storybook",
     "test": "jest",
     "test:watch": "jest --watch",

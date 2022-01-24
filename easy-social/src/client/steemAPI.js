@@ -17,6 +17,12 @@ const easysocialUrl = process.env.STEEMJS_URL || 'https://proxy.banter.network';
 //console.log('Client easysocial _URL: ',easysocialUrl);
 
 const client = createClient(easysocialUrl, options);
+console.log('[BANTER] easysocialUrl: ', easysocialUrl);
+console.log('[BANTER] client: ', client);
+console.log('[BANTER] process.env.STEEMJS_URL: ', process.env.STEEMJS_URL);
+console.log('[BANTER] process.env.PORT: ', process.env.PORT);
+
+
 client.sendAsync = (message, params) =>
   new Promise((resolve, reject) => {
     //rpc client -> send message and params
