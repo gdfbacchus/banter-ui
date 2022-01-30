@@ -1,9 +1,9 @@
 import { createAction } from 'redux-actions';
-import {Apis} from "bitsharesjs-ws";
-import {ChainStore} from "bitsharesjs";
-import WalletDb from "./loginBts/stores/WalletDb";
+// import {Apis} from "bitsharesjs-ws";
+// import {ChainStore} from "bitsharesjs";
+// import WalletDb from "./loginBts/stores/WalletDb";
 
-import { getAllFollowing } from '../helpers/apiHelpers';
+// import { getAllFollowing } from '../helpers/apiHelpers';
 
 const TYPES = {
   LOGIN_START: '@es_auth/LOGIN_START',

@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Helmet from 'react-helmet';
-import {ChainStore,FetchChain} from "bitsharesjs";
-import {Apis, ChainConfig} from "bitsharesjs-ws";
+// import Helmet from 'react-helmet';
+// import {ChainStore,FetchChain} from "bitsharesjs";
+// import {Apis, ChainConfig} from "bitsharesjs-ws";
 import { connect } from 'react-redux';
 import { injectIntl, FormattedMessage } from 'react-intl';
 import { Form, Select, Radio, Checkbox, Input } from 'antd';
@@ -14,7 +14,7 @@ import {
   resetRegistration
 } from "./registrationActions";
 
-import Loading from '../components/Icon/Loading';
+// import Loading from '../components/Icon/Loading';
 
 import {
   getIsAvailableAccount,
@@ -127,13 +127,13 @@ export default class RegistrationPage extends React.Component {
 
   _updateState(object) {
     //console.log("this.state: ", this.state)
-    let dynamicGlobal = ChainStore.getObject("2.1.0");
-    if(dynamicGlobal) {
-      // this.setState({dynamicGlobal: dynamicGlobal}, () => {
-      //   console.log("dynamicGlobal: ", dynamicGlobal)
-      // });
-      console.log("dynamicGlobal: ", dynamicGlobal)
-    }
+    // let dynamicGlobal = ChainStore.getObject("2.1.0");
+    // if(dynamicGlobal) {
+    //   // this.setState({dynamicGlobal: dynamicGlobal}, () => {
+    //   //   console.log("dynamicGlobal: ", dynamicGlobal)
+    //   // });
+    //   console.log("dynamicGlobal: ", dynamicGlobal)
+    // }
 
   }
 

@@ -6,7 +6,7 @@ import { push } from 'react-router-redux';
 import _ from 'lodash';
 import { Helmet } from 'react-helmet';
 import sanitize from 'sanitize-html';
-import WalletDb from "../account/loginBts/stores/WalletDb";
+// import WalletDb from "../account/loginBts/stores/WalletDb";
 import { getHasDefaultSlider } from '../helpers/user';
 import { dropCategory, isBannedPost } from '../helpers/postHelpers';
 import {
@@ -127,12 +127,12 @@ class PostContent extends React.Component {
   }
 
   getPostingWif() {
-    const posting_pubk = this.props.user.posting.key_auths[0][0];
-    //console.log("LIKE POST PUBLIC POSTING KEY: ",posting_pubk)
-    const private_posting_key = WalletDb.getPrivateKey(posting_pubk);
-    const wifP = private_posting_key.toWif();
-    //console.log("LIKE POST PRIVATE POSTING KEY wifP : ", wifP);
-    return wifP
+    // const posting_pubk = this.props.user.posting.key_auths[0][0];
+    // //console.log("LIKE POST PUBLIC POSTING KEY: ",posting_pubk)
+    // const private_posting_key = WalletDb.getPrivateKey(posting_pubk);
+    // const wifP = private_posting_key.toWif();
+    // //console.log("LIKE POST PRIVATE POSTING KEY wifP : ", wifP);
+    // return wifP
   }
 
   handleLikeClick = (post, postState, weight = 100) => {

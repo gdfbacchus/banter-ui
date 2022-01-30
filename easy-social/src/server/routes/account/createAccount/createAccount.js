@@ -2,8 +2,8 @@ const dsteem = require('dsteem');
 const aes256 = require('aes256');
 const codeMaker = require('../../common/utils/makeEasydexCode');
 const constants = require('../../common/constants');
-import {Apis} from "bitsharesjs-ws";
-var {ChainStore} = require("bitsharesjs");
+// import {Apis} from "bitsharesjs-ws";
+// var {ChainStore} = require("bitsharesjs");
 
 /* const bts_node_addr = "wss://eu-central-1.bts.crypto-bridge.org" //"wss://netherlands.bitshares.apasia.tech/ws" //"wss://na.openledger.info/ws"; //"wss://new-york.bitshares.apasia.tech/ws" // "wss://api.open-asset.tech/ws"//"wss://btsws.roelandp.nl/ws" //"wss://api-ru.bts.blckchnd.com" //"wss://atlanta.bitshares.apasia.tech/ws" //"wss://bitshares.crypto.fans/ws" //"ws://93.104.208.139:8090"//"wss://api.bts.network" //'wss://api.bts.blckchnd.com';//"wss://bitshares.openledger.info/ws"
 Apis.instance(bts_node_addr, true).init_promise.then((res) => {

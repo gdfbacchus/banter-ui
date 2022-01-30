@@ -15,6 +15,7 @@
     }
   },
   "plugins": [
+    "regenerator-transform",
     "react-hot-loader/babel",
     "transform-decorators-legacy",
     "transform-runtime",

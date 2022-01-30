@@ -5,7 +5,7 @@ import { createAsyncActionType } from '../helpers/stateHelpers';
 import { addNewNotification } from '../app/appActions';
 import { getFollowing } from '../user/userActions';
 import { BUSY_API_TYPES } from '../../common/constants/notifications';
-import WalletDb from "../account/loginBts/stores/WalletDb";
+// import WalletDb from "../account/loginBts/stores/WalletDb";
 
 export const LOGIN = '@auth/LOGIN';
 export const LOGIN_START = '@auth/LOGIN_START';
@@ -74,7 +74,7 @@ export const logout = () => (dispatch, getState, {}) => {
   // steemConnectAPI.revokeToken();
   // Cookie.remove('access_token');
 
-  WalletDb.onLock();
+  // WalletDb.onLock();
 
   dispatch({
     type: LOGOUT,

@@ -6,7 +6,7 @@ import { injectIntl, FormattedMessage, FormattedNumber } from 'react-intl';
 import SteemConnect from '../steemConnectAPI';
 const dsteem = require('dsteem');
 import dsteemAPIClient from '../dsteemAPI';
-import WalletDb from "../account/loginBts/stores/WalletDb";
+// import WalletDb from "../account/loginBts/stores/WalletDb";
 import { getAuthenticatedUser } from '../reducers';
 import { getUserAccountHistory } from './walletActions';
 import { reload } from '../auth/authActions';
@@ -42,69 +42,69 @@ class ClaimRewardsBlock extends Component {
   };
 
   handleClaimRewards = () => {
-    const { user } = this.props;
-    // console.log("CR->USER: ",user);
-    const {
-      name,
-      reward_steem_balance: steemBalance,
-      reward_sbd_balance: sbdBalance,
-      reward_vesting_balance: vestingBalance,
-    } = user;
-    this.setState({
-      loading: true,
-    });
-    // SteemConnect.claimRewardBalance(name, steemBalance, sbdBalance, vestingBalance, err => {
-    //   if (!err) {
-    //     this.setState({
+    // const { user } = this.props;
+    // // console.log("CR->USER: ",user);
+    // const {
+    //   name,
+    //   reward_steem_balance: steemBalance,
+    //   reward_sbd_balance: sbdBalance,
+    //   reward_vesting_balance: vestingBalance,
+    // } = user;
+    // this.setState({
+    //   loading: true,
+    // });
+    // // SteemConnect.claimRewardBalance(name, steemBalance, sbdBalance, vestingBalance, err => {
+    // //   if (!err) {
+    // //     this.setState({
+    // //       loading: false,
+    // //       rewardClaimed: true,
+    // //     });
+    // //     this.props.getUserAccountHistory(name).then(() => this.props.reload());
+    // //   } else {
+    // //     this.setState({
+    // //       loading: false,
+    // //     });
+    // //   }
+    // // });
+    //
+    // const posting_pubk = this.props.user.posting.key_auths[0][0];
+    // //console.log("PUBLIC POSTING KEY: ",posting_pubk)
+    // const private_posting_key = WalletDb.getPrivateKey(posting_pubk);
+    // const wifP = private_posting_key.toWif();
+    // //console.log("PRIVATE POSTING KEY wifP : ", wifP);
+    //
+    // const privKey = dsteem.PrivateKey.from(wifP);//That's Working
+    //
+    // const op = [
+    //   'claim_reward_balance',
+    //   {
+    //     account: name,
+    //     reward_steem: steemBalance,
+    //     reward_sbd: sbdBalance,
+    //     reward_vests: vestingBalance,
+    //   },
+    // ];
+    // //console.log("CLAIM REWARDS wifP: ",wifP);
+    // //console.log("CLAIM REWARDS rivateKey.from: ",privKey);
+    // console.log("CLAIM REWARDS Operations before send: ",op);
+    //
+    // let _that = this;
+    // dsteemAPIClient.broadcast.sendOperations([op], privKey).then(
+    //   function(result) {
+    //     _that.setState({
     //       loading: false,
     //       rewardClaimed: true,
     //     });
-    //     this.props.getUserAccountHistory(name).then(() => this.props.reload());
-    //   } else {
-    //     this.setState({
+    //     _that.props.getUserAccountHistory(name).then(() => _that.props.reload());
+    //   },
+    //   function(error) {
+    //     console.error(error);
+    //
+    //     _that.setState({
     //       loading: false,
     //     });
     //   }
-    // });
-
-    const posting_pubk = this.props.user.posting.key_auths[0][0];
-    //console.log("PUBLIC POSTING KEY: ",posting_pubk)
-    const private_posting_key = WalletDb.getPrivateKey(posting_pubk);
-    const wifP = private_posting_key.toWif();
-    //console.log("PRIVATE POSTING KEY wifP : ", wifP);
-
-    const privKey = dsteem.PrivateKey.from(wifP);//That's Working
-
-    const op = [
-      'claim_reward_balance',
-      {
-        account: name,
-        reward_steem: steemBalance,
-        reward_sbd: sbdBalance,
-        reward_vests: vestingBalance,
-      },
-    ];
-    //console.log("CLAIM REWARDS wifP: ",wifP);
-    //console.log("CLAIM REWARDS rivateKey.from: ",privKey);
-    console.log("CLAIM REWARDS Operations before send: ",op);
-
-    let _that = this;
-    dsteemAPIClient.broadcast.sendOperations([op], privKey).then(
-      function(result) {
-        _that.setState({
-          loading: false,
-          rewardClaimed: true,
-        });
-        _that.props.getUserAccountHistory(name).then(() => _that.props.reload());
-      },
-      function(error) {
-        console.error(error);
-
-        _that.setState({
-          loading: false,
-        });
-      }
-    );
+    // );
 
 
   };

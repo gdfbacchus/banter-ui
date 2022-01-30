@@ -2,9 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Route, Redirect } from 'react-router';
 import Helmet from 'react-helmet';
-import {ChainStore, PrivateKey, key, Aes} from "bitsharesjs";
-import {Apis, ChainConfig} from "bitsharesjs-ws";
-import WalletDb from "./loginBts/stores/WalletDb";
+// import {ChainStore, PrivateKey, key, Aes} from "bitsharesjs";
+// import {Apis, ChainConfig} from "bitsharesjs-ws";
+// import WalletDb from "./loginBts/stores/WalletDb";
 import { getIsAuthFetching, getIsAuthenticated, getIsLoaded } from '../reducers';
 import { connect } from 'react-redux';
 import { injectIntl, FormattedMessage } from 'react-intl';
@@ -53,7 +53,7 @@ export default class LoginPage extends React.Component {
 
 
   componentWillMount() {
-    let isLocked = WalletDb.isLocked();
+    // let isLocked = WalletDb.isLocked();
     //console.log("isLocked: ",isLocked)
     // willTransitionTo(true,this._initBtsCallBack.bind(this)).then(()=>{
     //
@@ -113,13 +113,13 @@ export default class LoginPage extends React.Component {
 
   _updateState(object) {
     //console.log("this.state: ", this.state)
-    let dynamicGlobal = ChainStore.getObject("2.1.0");
-    if(dynamicGlobal) {
-      // this.setState({dynamicGlobal: dynamicGlobal}, () => {
-      //   console.log("dynamicGlobal: ", dynamicGlobal)
-      // });
-      console.log("dynamicGlobal: ", dynamicGlobal)
-    }
+    // let dynamicGlobal = ChainStore.getObject("2.1.0");
+    // if(dynamicGlobal) {
+    //   // this.setState({dynamicGlobal: dynamicGlobal}, () => {
+    //   //   console.log("dynamicGlobal: ", dynamicGlobal)
+    //   // });
+    //   console.log("dynamicGlobal: ", dynamicGlobal)
+    // }
 
   }
 

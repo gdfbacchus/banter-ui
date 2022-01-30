@@ -1,8 +1,8 @@
 
 import { createAction } from 'redux-actions';
-import {Apis} from "bitsharesjs-ws";
-import {ChainStore, PrivateKey, key, Aes} from "bitsharesjs";
-import WalletDb from "./loginBts/stores/WalletDb";
+// import {Apis} from "bitsharesjs-ws";
+// import {ChainStore, PrivateKey, key, Aes} from "bitsharesjs";
+// import WalletDb from "./loginBts/stores/WalletDb";
 const dsteem = require('dsteem');
 import {getAccount} from "../helpers/apiHelpers"
 import endpoints from "../costants/endpoints";
@@ -154,18 +154,19 @@ export const isAvailablePassword = (accountName, pass) => (dispatch, getState, {
   // console.log("isAvailablePassword Action");
   // console.log("accountName: ",accountName);
   // console.log("pass: ",pass);
-  const isValidPass = WalletDb.validatePassForRegistration(pass, accountName);
-
-  isValidPass.then( (isValid)=>{
-    return dispatch({
-      type: TYPES.SET_IS_AV_REG_PASS,
-      payload: {
-        isAvailablePassword: isValid,
-      }
-    })//.catch(() => dispatch(loginError()));
-  }).catch((err)=>{
-    console.log("err: ",err);
-  });
+  
+  // const isValidPass = WalletDb.validatePassForRegistration(pass, accountName);
+  //
+  // isValidPass.then( (isValid)=>{
+  //   return dispatch({
+  //     type: TYPES.SET_IS_AV_REG_PASS,
+  //     payload: {
+  //       isAvailablePassword: isValid,
+  //     }
+  //   })//.catch(() => dispatch(loginError()));
+  // }).catch((err)=>{
+  //   console.log("err: ",err);
+  // });
 
 
 
@@ -283,141 +284,141 @@ export const register = (accountName, password) => (dispatch, getState, { steemA
         }
 
         console.log("Get bts account counter: ",counter);
-        let acc = ChainStore.getAccount(accountName);
-        if(acc){
-          console.log("Account: ",acc);
-          console.log("---------------------------------");
-          clearInterval(id);
-
-          const ownerKey = dsteem.PrivateKey.fromLogin(accountName, password, 'owner');
-          const activeKey = dsteem.PrivateKey.fromLogin(accountName, password, 'active');
-          const postingKey = dsteem.PrivateKey.fromLogin(accountName, password, 'posting');
-          const memoKey = dsteem.PrivateKey.fromLogin(accountName, password, 'memo');
-
-          const ownerAuthBTS = WalletDb.generateKeyFromPassword(accountName, 'owner', password);
-          const activeAuthBTS = WalletDb.generateKeyFromPassword(accountName, 'active', password);
-          const postingAuthBTS = WalletDb.generateKeyFromPassword(accountName, 'posting', password);
-          // const memoAuthBTS = WalletDb.generateKeyFromPassword(accountName, 'memo', password);
-          //const memoKeyBTS = memoAuthBTS.pubKey;
-          /*
-          console.log("ownerKey.createPublic(): ",ownerKey.createPublic("BTS"));
-          console.log("ownerKey.createPublic().key: ",ownerKey.createPublic("BTS").key);
-          console.log("ownerKey: ",ownerKey);
-          console.log("ownerAuthBTS privKey: ",ownerAuthBTS.privKey);
-          console.log("ownerAuthBTS pubKey: ",ownerAuthBTS.pubKey);
-          console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
-          console.log("activeKey: ",activeKey);
-          console.log("activeKey.createPublic(): ",activeKey.createPublic("BTS"));
-          console.log("activeKey.createPublic().key: ",activeKey.createPublic("BTS").key);
-          console.log("activeAuthBTS privKey: ",activeAuthBTS.privKey);
-          console.log("activeAuthBTS pubKey: ",activeAuthBTS.pubKey);
-          console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
-          console.log("postingKey: ",postingKey);
-          console.log("postingKey.createPublic(): ",postingKey.createPublic("BTS"));
-          console.log("postingKey.createPublic().key: ",postingKey.createPublic("BTS").key);
-          console.log("postingAuthBTS privKey: ",postingAuthBTS.privKey);
-          console.log("postingAuthBTS pubKey: ",postingAuthBTS.pubKey);
-          console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
-          */
-
-
-          const creator = 'banter';
-          const newName = accountName;//'vasko-1-test30';
-          const json_meta = '';
-          const owner = ownerAuthBTS.pubKey;
-          const active = activeAuthBTS.pubKey;
-          const posting = postingAuthBTS.pubKey;//'BTS'+postingKey.createPublic().key;//activeAuthBTS.pubKey;
-          const memo = activeAuthBTS.pubKey;
-          const broadcast = true;
-
-          const params = [creator, newName, json_meta, owner, active, posting, memo, broadcast];
-
-          console.log("Account creation PARAMs: ",params);
-
-          // const body2 = {
-          //   jsonrpc: '2.0',
-          //   params: [
-          //     creator,
-          //     newName,
-          //     json_meta,
-          //     ownerKey.createPublic("BTS"),
-          //     activeKey.createPublic("BTS"),
-          //     postingKey.createPublic("BTS"),
-          //     memoKey.createPublic("BTS"),
-          //     true
-          //   ]
-          // };const body_string2 = JSON.stringify(body2);
-
-          const body = {
-            "jsonrpc": "2.0",
-            "params": params
-          };
-          const body_string = JSON.stringify(body);
-
-
-          // fetch( "http://localhost:3000/es-api/v0/ca",{
-          fetch( endpoints.CREATE_ACCOUNT,{
-            method:"POST",
-            headers: new Headers( { "Accept": "application/json", "Content-Type":"application/json" } ),
-            body: body_string
-            //mode: "no-cors"
-          }).then(
-            data => {
-              console.log("DATA: ", data)
-              data.json()
-                .then( json => {
-                  console.log("response json: ", json);
-                  //console.log("address: ", json.response.address);
-                  //console.log("asset: ", json.response.asset);
-                  if(json.response){
-                    return dispatch({
-                      type: TYPES.RGISTRATION_SUCCESS,
-                      payload: {res: json.response}
-                    })
-                  } else {
-                    return dispatch({
-                      type: TYPES.RGISTRATION_ERROR,
-                      payload: {res: json.error}
-                    })
-                  }
-                }, error => {
-                    console.log( "error1: ",error  );
-                    return dispatch({
-                      type: TYPES.RGISTRATION_ERROR,
-                      payload: {}
-                    })
-                })
-            }, error => {
-              console.log( "error2: ",error  );
-              return dispatch({
-                type: TYPES.RGISTRATION_ERROR,
-                payload: {}
-              })
-            }).catch(err => {
-              console.log("fetch error3:", err);
-              return dispatch({
-                type: TYPES.RGISTRATION_ERROR,
-                payload: {}
-              })
-          });
-          // return;
-
-          // steemAPI.sendAsync('call', [
-          //   'condenser_api',
-          //   'create_account_with_keys',
-          //   params,
-          // ]).then((res)=>{
-          //   //debugger;
-          //   console.log("CREATE ACCOUNT RESPONSE: ",res);
-          //   //TODO Dispatch to reducer success
-          //   //Call getAccounts for the new created account
-          // }).catch((err)=>{
-          //   //debugger;
-          //   console.log("CREATE ACCOUNT ERROR: ",err);
-          //   //TODO DISPATCH to reducer with error
-          // });
-
-        }
+        // let acc = ChainStore.getAccount(accountName);
+        // if(acc){
+        //   console.log("Account: ",acc);
+        //   console.log("---------------------------------");
+        //   clearInterval(id);
+        //
+        //   const ownerKey = dsteem.PrivateKey.fromLogin(accountName, password, 'owner');
+        //   const activeKey = dsteem.PrivateKey.fromLogin(accountName, password, 'active');
+        //   const postingKey = dsteem.PrivateKey.fromLogin(accountName, password, 'posting');
+        //   const memoKey = dsteem.PrivateKey.fromLogin(accountName, password, 'memo');
+        //
+        //   const ownerAuthBTS = WalletDb.generateKeyFromPassword(accountName, 'owner', password);
+        //   const activeAuthBTS = WalletDb.generateKeyFromPassword(accountName, 'active', password);
+        //   const postingAuthBTS = WalletDb.generateKeyFromPassword(accountName, 'posting', password);
+        //   // const memoAuthBTS = WalletDb.generateKeyFromPassword(accountName, 'memo', password);
+        //   //const memoKeyBTS = memoAuthBTS.pubKey;
+        //   /*
+        //   console.log("ownerKey.createPublic(): ",ownerKey.createPublic("BTS"));
+        //   console.log("ownerKey.createPublic().key: ",ownerKey.createPublic("BTS").key);
+        //   console.log("ownerKey: ",ownerKey);
+        //   console.log("ownerAuthBTS privKey: ",ownerAuthBTS.privKey);
+        //   console.log("ownerAuthBTS pubKey: ",ownerAuthBTS.pubKey);
+        //   console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+        //   console.log("activeKey: ",activeKey);
+        //   console.log("activeKey.createPublic(): ",activeKey.createPublic("BTS"));
+        //   console.log("activeKey.createPublic().key: ",activeKey.createPublic("BTS").key);
+        //   console.log("activeAuthBTS privKey: ",activeAuthBTS.privKey);
+        //   console.log("activeAuthBTS pubKey: ",activeAuthBTS.pubKey);
+        //   console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+        //   console.log("postingKey: ",postingKey);
+        //   console.log("postingKey.createPublic(): ",postingKey.createPublic("BTS"));
+        //   console.log("postingKey.createPublic().key: ",postingKey.createPublic("BTS").key);
+        //   console.log("postingAuthBTS privKey: ",postingAuthBTS.privKey);
+        //   console.log("postingAuthBTS pubKey: ",postingAuthBTS.pubKey);
+        //   console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+        //   */
+        //
+        //
+        //   const creator = 'banter';
+        //   const newName = accountName;//'vasko-1-test30';
+        //   const json_meta = '';
+        //   const owner = ownerAuthBTS.pubKey;
+        //   const active = activeAuthBTS.pubKey;
+        //   const posting = postingAuthBTS.pubKey;//'BTS'+postingKey.createPublic().key;//activeAuthBTS.pubKey;
+        //   const memo = activeAuthBTS.pubKey;
+        //   const broadcast = true;
+        //
+        //   const params = [creator, newName, json_meta, owner, active, posting, memo, broadcast];
+        //
+        //   console.log("Account creation PARAMs: ",params);
+        //
+        //   // const body2 = {
+        //   //   jsonrpc: '2.0',
+        //   //   params: [
+        //   //     creator,
+        //   //     newName,
+        //   //     json_meta,
+        //   //     ownerKey.createPublic("BTS"),
+        //   //     activeKey.createPublic("BTS"),
+        //   //     postingKey.createPublic("BTS"),
+        //   //     memoKey.createPublic("BTS"),
+        //   //     true
+        //   //   ]
+        //   // };const body_string2 = JSON.stringify(body2);
+        //
+        //   const body = {
+        //     "jsonrpc": "2.0",
+        //     "params": params
+        //   };
+        //   const body_string = JSON.stringify(body);
+        //
+        //
+        //   // fetch( "http://localhost:3000/es-api/v0/ca",{
+        //   fetch( endpoints.CREATE_ACCOUNT,{
+        //     method:"POST",
+        //     headers: new Headers( { "Accept": "application/json", "Content-Type":"application/json" } ),
+        //     body: body_string
+        //     //mode: "no-cors"
+        //   }).then(
+        //     data => {
+        //       console.log("DATA: ", data)
+        //       data.json()
+        //         .then( json => {
+        //           console.log("response json: ", json);
+        //           //console.log("address: ", json.response.address);
+        //           //console.log("asset: ", json.response.asset);
+        //           if(json.response){
+        //             return dispatch({
+        //               type: TYPES.RGISTRATION_SUCCESS,
+        //               payload: {res: json.response}
+        //             })
+        //           } else {
+        //             return dispatch({
+        //               type: TYPES.RGISTRATION_ERROR,
+        //               payload: {res: json.error}
+        //             })
+        //           }
+        //         }, error => {
+        //             console.log( "error1: ",error  );
+        //             return dispatch({
+        //               type: TYPES.RGISTRATION_ERROR,
+        //               payload: {}
+        //             })
+        //         })
+        //     }, error => {
+        //       console.log( "error2: ",error  );
+        //       return dispatch({
+        //         type: TYPES.RGISTRATION_ERROR,
+        //         payload: {}
+        //       })
+        //     }).catch(err => {
+        //       console.log("fetch error3:", err);
+        //       return dispatch({
+        //         type: TYPES.RGISTRATION_ERROR,
+        //         payload: {}
+        //       })
+        //   });
+        //   // return;
+        //
+        //   // steemAPI.sendAsync('call', [
+        //   //   'condenser_api',
+        //   //   'create_account_with_keys',
+        //   //   params,
+        //   // ]).then((res)=>{
+        //   //   //debugger;
+        //   //   console.log("CREATE ACCOUNT RESPONSE: ",res);
+        //   //   //TODO Dispatch to reducer success
+        //   //   //Call getAccounts for the new created account
+        //   // }).catch((err)=>{
+        //   //   //debugger;
+        //   //   console.log("CREATE ACCOUNT ERROR: ",err);
+        //   //   //TODO DISPATCH to reducer with error
+        //   // });
+        //
+        // }
 
         console.log("=================================");
         counter++;

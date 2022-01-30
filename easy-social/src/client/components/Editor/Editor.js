@@ -17,9 +17,9 @@ import { remarkable } from '../Story/Body';
 import BodyContainer from '../../containers/Story/BodyContainer';
 import './Editor.less';
 
-import {ChainStore, PrivateKey, key, Aes} from "bitsharesjs";
-import {Apis, ChainConfig} from "bitsharesjs-ws";
-import WalletDb from "../../account/loginBts/stores/WalletDb";
+// import {ChainStore, PrivateKey, key, Aes} from "bitsharesjs";
+// import {Apis, ChainConfig} from "bitsharesjs-ws";
+// import WalletDb from "../../account/loginBts/stores/WalletDb";
 
 @injectIntl
 @requiresLogin
@@ -206,27 +206,27 @@ class Editor extends React.Component {
   handleSubmit(e) {
     e.preventDefault();
 
-    this.props.form.validateFieldsAndScroll((err, values) => {
-      if (err) this.props.onError();
-      else {
-        const posting_pubk = this.props.user.posting.key_auths[0][0];
-        //console.log("PUBLIC POSTING KEY: ",posting_pubk)
-        const private_posting_key = WalletDb.getPrivateKey(posting_pubk);
-        const wifP = private_posting_key.toWif();
-        //console.log("PRIVATE POSTING KEY wifP : ", wifP);
-
-
-        //return;
-        const isForUpdate = !!this.props.draftId;
-        //console.log("isForUpdate",isForUpdate)
-        if(isForUpdate){
-          values.isUpdating = true;
-        }
-        //console.log("POST values: ", values);
-
-        this.props.onSubmit(values,wifP);
-      }
-    });
+    // this.props.form.validateFieldsAndScroll((err, values) => {
+    //   if (err) this.props.onError();
+    //   else {
+    //     const posting_pubk = this.props.user.posting.key_auths[0][0];
+    //     //console.log("PUBLIC POSTING KEY: ",posting_pubk)
+    //     const private_posting_key = WalletDb.getPrivateKey(posting_pubk);
+    //     const wifP = private_posting_key.toWif();
+    //     //console.log("PRIVATE POSTING KEY wifP : ", wifP);
+    //
+    //
+    //     //return;
+    //     const isForUpdate = !!this.props.draftId;
+    //     //console.log("isForUpdate",isForUpdate)
+    //     if(isForUpdate){
+    //       values.isUpdating = true;
+    //     }
+    //     //console.log("POST values: ", values);
+    //
+    //     this.props.onSubmit(values,wifP);
+    //   }
+    // });
   }
 
   handleDelete(e) {

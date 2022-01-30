@@ -19,11 +19,10 @@ app.all('*', function (req, res, next) {
         // CORS Preflight
         res.send();
     } else {
-
         //'https://node.easysocial.life'
         var targetURL = req.header('Target-URL');
-				console.log("targetURL: ",targetURL);
-				if(!targetURL) {
+        console.log("targetURL: ",targetURL);
+        if(!targetURL) {
           res.set('Target-URL', 'https://node.banter.network')
         }
         console.log("REQUEST HEADERS: ",req.headers);
