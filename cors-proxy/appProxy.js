@@ -9,3 +9,15 @@ const target = 'https://node.banter.network';
 
 const proxy = new NoCorsProxy(port, host, target);
 proxy.start();
+
+
+/*
+
+
+const NoCorsProxy = require('no-cors-proxy');
+const port = process.env.PORT || 8282;
+const host = '79.143.179.62';
+const target = 'https://node.banter.network';
+
+const proxy = new NoCorsProxy(port, host, target)
+proxy.start();*/
