@@ -1,10 +1,8 @@
 const createClient = require('lightrpc').createClient;
 
-// const url = process.env.STEEMJS_URL || 'https://api.steemit.com';
-// const url = process.env.STEEMJS_URL || 'http://79.143.179.62:8080';
-// const url = process.env.STEEMJS_URL || 'http://localhost:8080';
-// const url = process.env.STEEMJS_URL || 'http://79.143.179.62:8282';//PROXY
-const url = process.env.STEEMJS_URL || 'https://proxy.banter.network';//PROXY
+const url = process.env.STEEMJS_URL || 'https://proxy.banter.network';
+// const url = process.env.STEEMJS_URL || 'https://proxy.banter.network';//PROXY
+
 const port = process.env.PORT;
 console.log('Server steemAPI process.env.STEEMJS_URL: ',process.env.STEEMJS_URL);
 console.log('Server steemAPI URL: ',url);

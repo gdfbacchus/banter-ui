@@ -34,11 +34,7 @@ const DEFINE_PLUGIN = new webpack.DefinePlugin({
   'process.env.STEEMCONNECT_HOST': JSON.stringify(
     process.env.STEEMCONNECT_HOST || 'https://steemconnect.com',
   ),
-   // 'process.env.STEEMJS_URL': JSON.stringify(process.env.STEEMJS_URL || 'https://api.steemit.com'),
-  // 'process.env.STEEMJS_URL': JSON.stringify(process.env.STEEMJS_URL || 'http://79.143.179.62:8080'),
-  'process.env.STEEMJS_URL': JSON.stringify(process.env.STEEMJS_URL || 'http://localhost:8080'),//PROXY
-  // 'process.env.STEEMJS_URL': JSON.stringify(process.env.STEEMJS_URL || 'http://79.143.179.62:8282'),//PROXY
-
+  'process.env.STEEMJS_URL': JSON.stringify(process.env.STEEMJS_URL || 'https://proxy.banter.network'),
   // 'process.env.STEEMJS_URL': JSON.stringify(process.env.STEEMJS_URL || 'https://proxy.banter.network'),//PROXY
   'process.env.SIGNUP_URL': JSON.stringify(
     process.env.SIGNUP_URL || 'https://signup.steemit.com/?ref=busy',

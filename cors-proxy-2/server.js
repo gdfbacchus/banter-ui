@@ -31,7 +31,7 @@ app.all('*', function (req, res, next) {
 
         console.log("[BANTER] req.header Target-URL: ",targetURL);
         if(!targetURL) {
-            const target = process.env.TARGET_URL || 'https://79.143.179.62:8090';
+            const target = process.env.TARGET_URL || 'https://node.banter.network';
             // const target = 'https://node.banter.network';
           res.set('Target-URL', target);
           // res.set('Target-URL', '79.143.179.62:8090');
