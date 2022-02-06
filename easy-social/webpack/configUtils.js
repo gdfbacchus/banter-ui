@@ -34,7 +34,7 @@ const DEFINE_PLUGIN = new webpack.DefinePlugin({
   'process.env.STEEMCONNECT_HOST': JSON.stringify(
     process.env.STEEMCONNECT_HOST || 'https://steemconnect.com',
   ),
-  'process.env.STEEMJS_URL': JSON.stringify(process.env.STEEMJS_URL || 'https://proxy.banter.network'),
+  'process.env.STEEMJS_URL': JSON.stringify(process.env.STEEMJS_URL || 'https://node.banter.network'),
   // 'process.env.STEEMJS_URL': JSON.stringify(process.env.STEEMJS_URL || 'https://proxy.banter.network'),//PROXY
   'process.env.SIGNUP_URL': JSON.stringify(
     process.env.SIGNUP_URL || 'https://signup.steemit.com/?ref=busy',

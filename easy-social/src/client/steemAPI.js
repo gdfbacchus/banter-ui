@@ -4,7 +4,7 @@ const options = {
   timeout: 15000
 };
 
-const easysocialUrl = process.env.STEEMJS_URL || 'https://proxy.banter.network';
+const easysocialUrl = process.env.STEEMJS_URL || 'https://node.banter.network';
 // const easysocialUrl = process.env.STEEMJS_URL || 'https://proxy.banter.network';//PROXY
 
 // console.log('Client steemAPI process.env.STEEMJS_URL: ',process.env.STEEMJS_URL);

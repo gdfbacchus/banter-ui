@@ -1,6 +1,6 @@
 const createClient = require('lightrpc').createClient;
 
-const url = process.env.STEEMJS_URL || 'https://proxy.banter.network';
+const url = process.env.STEEMJS_URL || 'https://node.banter.network';
 // const url = process.env.STEEMJS_URL || 'https://proxy.banter.network';//PROXY
 
 const port = process.env.PORT;
