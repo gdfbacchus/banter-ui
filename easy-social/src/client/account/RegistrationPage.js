@@ -18,7 +18,7 @@ import {
 
 import {
   getIsAvailableAccount,
-  getIsAvailablePassword,
+  // getIsAvailablePassword,
   getIsProcessing,
   getRegStatus
 } from '../reducers';
@@ -30,7 +30,7 @@ import './Settings.less';
   state => (
     {
       availableAccountName: getIsAvailableAccount(state),
-      availablePassword: getIsAvailablePassword(state),
+      // availablePassword: getIsAvailablePassword(state),
       isProcessing: getIsProcessing(state),
       regStatus: getRegStatus(state)
   }),
@@ -195,12 +195,15 @@ export default class RegistrationPage extends React.Component {
   }
   onUpdate(event) {
     event.persist();
-
-    // console.log("target value: ",event.target.value);
-    // console.log("target input name: ",event.target.name);
-    // console.log("target input type: ",event.target.type);
+    console.log("[BANTER] onUpdate() ------------------------------------------------------------");
+    console.log("[BANTER] target value: ",event.target.value);
+    console.log("[BANTER] target input name: ",event.target.name);
+    console.log("[BANTER] target input type: ",event.target.type);
+    console.log("------------------------------------------------------------");
     this.setState({ [event.target.name]: event.target.value }, ()=>{
-      if(event.target.name==="accountName"){this.validateForm(event)}
+      if(event.target.name==="accountName"){
+        this.validateForm(event)
+      }
     });
 
   }
@@ -232,22 +235,22 @@ export default class RegistrationPage extends React.Component {
 
 
     this.props.isAvailableAccount(accountName);
-    this.props.isAvailablePassword(accountName, pass);
+    // this.props.isAvailablePassword(accountName, pass);
 
-    // const confPass = this.state.confPassword;
-    // const avAccountName = this.props.availableAccountName;
+    const confPass = this.state.confPassword;
+    const avAccountName = this.props.availableAccountName;
     // const avPassword = this.props.availablePassword;
-    //
-    // console.log("avAccountName: ",avAccountName);
+
+    console.log("avAccountName: ",avAccountName);
     // console.log("avPassword: ",avPassword);
 
-    // if(pass === confPass && avAccountName) {
-    //   //this.setState({isValidForm: true});
-    //   return true;
-    // } else {
-    //   //this.setState({isValidForm: false, isDisabledSubmit: true});
-    //   return false;
-    // }
+    if(pass === confPass && avAccountName) {
+      //this.setState({isValidForm: true});
+      return true;
+    } else {
+      //this.setState({isValidForm: false, isDisabledSubmit: true});
+      return false;
+    }
 
 
   }
@@ -267,7 +270,7 @@ export default class RegistrationPage extends React.Component {
 
     let diss = !(pass===confPass
                   && !this.state.isDisabledSubmit
-                    && this.props.availablePassword
+                    // && this.props.availablePassword
                       && this.props.availableAccountName
                         && this.props.regStatus === '');
     console.log("Reg button is disabled[" + diss + "]");
@@ -335,7 +338,8 @@ export default class RegistrationPage extends React.Component {
                       type="password"
                       name="password"
                     />
-                    {!this.props.availablePassword && pass.length > 0 ?
+                    {/*{!this.props.availablePassword && pass.length > 0 ?*/}
+                    {pass.length < 8 ?
                       <div style={{color:"red"}}>Incorrect password.
                       </div> : null}
                   </Form.Item>

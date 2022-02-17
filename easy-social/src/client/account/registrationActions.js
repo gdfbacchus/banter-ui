@@ -6,6 +6,7 @@ import { createAction } from 'redux-actions';
 const dsteem = require('dsteem');
 import {getAccount} from "../helpers/apiHelpers"
 import endpoints from "../costants/endpoints";
+// import dsteemClient from '../dsteemAPI';
 
 //import steem from '@steemit/steem-js';
 //const privateWif = steem.auth.toWif(username, password, roles[0]);
@@ -81,74 +82,34 @@ const TYPES = {
 const loginError = createAction(TYPES.LOGIN_ERROR);
 
 
-export const isAvailableAccount = (accountName) => (dispatch, getState, { steemAPI }) => {
+export const isAvailableAccount = (accountName) => (dispatch, getState, { steemAPI, dsteemClient }) => {
+  let getAccountPromise = steemAPI.sendAsync('condenser_api.get_accounts', [[accountName]])
+    // steemAPI.sendAsync('condenser_api.get_accounts', [["kids-trail"]])//WORKING QUERY
+    .then((resp) => {
+      let isAv = false;
 
-  //console.log("ACCTION CHECK ACCOUNT FOR REG");
+      if(resp.length===0) {
+        console.log("There is no such ES account: ",resp);
+        isAv = true;
+      }
+      else if(resp.length === 1) {
+        console.log("Found ES account - response: ",resp)
+      }
+      // else {
+      //   console.log("Found some ES accounts - response: ",resp)
+      // }
 
-/*  let counter = 1;
-  let id = setInterval(()=>{
-    if(counter===5){
-      //console.log("Count limit["+counter+"] is exceeded. There is no BTS account.");
-      clearInterval(id);
       return dispatch({
         type: TYPES.SET_IS_AV_REG_ACCOUNT,
         payload: {
-          isAvailableAccount: false,
+          isAvailableAccount: isAv,
         }
       })//.catch(() => dispatch(loginError()));
-    }
-
-    let acc = ChainStore.getAccount(accountName);
-    //console.log("BTS Account 0: ",acc);
-    if(acc){
-      console.log("Found BTS Account: ",acc);
-      //console.log("---------------------------------");
-      clearInterval(id); */
-
-
-      let getAccountPromise = steemAPI.sendAsync('condenser_api.get_accounts', [[accountName]])
-      // let getAccountPromise = steemAPI.sendAsync('condenser_api.get_accounts', [["vasko-1-test31"]])
-      // steemAPI.sendAsync('condenser_api.get_accounts', [["kids-trail"]])//WORKING QUERY
-        .then((resp) => {
-          let isAv = false;
-
-          if(resp.length===0) {
-            console.log("There is no such ES account: ",resp);
-            isAv = true;
-          }
-          else if(resp.length === 1) {
-            console.log("Found ES account - response: ",resp)
-          }
-          // else {
-          //   console.log("Found some ES accounts - response: ",resp)
-          // }
-
-          return dispatch({
-            type: TYPES.SET_IS_AV_REG_ACCOUNT,
-            payload: {
-              isAvailableAccount: isAv,
-            }
-          })//.catch(() => dispatch(loginError()));
-        })
-        .catch((err)=>{
-          console.log("ERROR: ",err)
-        });
-
-    }/* else if(acc === null) {
-      console.log("BTS NULL Account: ",acc);
-      console.log("BTS account is not exist.");
-      clearInterval(id);
-      return dispatch({
-        type: TYPES.SET_IS_AV_REG_ACCOUNT,
-        payload: {
-          isAvailableAccount: false,
-        }
-      })//.catch(() => dispatch(loginError()));
-    }
-    console.log("=================================");
-    counter++;
-  },100); */
-// };
+    })
+    .catch((err)=>{
+      console.log("ERROR: ",err)
+    });
+}
 
 export const isAvailablePassword = (accountName, pass) => (dispatch, getState, { steemAPI }) => {
   // console.log("isAvailablePassword Action");
@@ -178,6 +139,7 @@ export const startRegistration = () => (dispatch) => {
     payload: {}
   })
 };
+
 export const resetRegistration = () => (dispatch) => {
   return dispatch({
     type: TYPES.RESET_REGISTRATION,
@@ -185,260 +147,93 @@ export const resetRegistration = () => (dispatch) => {
   })
 };
 
-export const register = (accountName, password) => (dispatch, getState, { steemAPI }) => {
+export const register = (accountName, password) => (dispatch, getState, { steemAPI,  }) => {
   console.log("Call Registration Action");
-  const state = getState();
+  const opts = {
+    addressPrefix: 'BTS',
+    chainId: '4ff15a093f2777fd61a9381fc62dfb3fd54e3770494afcfb392a51352715b4e9'
+  };
+  const dsteemClient = new dsteem.Client('https://node.banter.network',opts);
 
-  let promise = Promise.resolve(null);
+  const ownerKey = dsteem.PrivateKey.fromLogin(accountName, password, 'owner');
+  const activeKey = dsteem.PrivateKey.fromLogin(accountName, password, 'active');
+  const postingKey = dsteem.PrivateKey.fromLogin(accountName, password, 'posting');
+  const memoKey = dsteem.PrivateKey.fromLogin(accountName, password, 'memo').createPublic(opts.addressPrefix);
 
-  // if (getIsLoaded(state)) {
-  //   promise = Promise.resolve(null);
-  // }
+  const ownerAuth = {
+    weight_threshold: 1,
+    account_auths: [],
+    key_auths: [[ownerKey.createPublic(opts.addressPrefix), 1]],
+  };
+  const activeAuth = {
+    weight_threshold: 1,
+    account_auths: [],
+    key_auths: [[activeKey.createPublic(opts.addressPrefix), 1]],
+  };
+  const postingAuth = {
+    weight_threshold: 1,
+    account_auths: [],
+    key_auths: [[postingKey.createPublic(opts.addressPrefix), 1]],
+  };
 
-  let getAccountPromise = getAccount(accountName)
-  // let getAccountPromise = steemAPI.sendAsync('condenser_api.get_accounts', [["vasko-1-test31"]])
-  // steemAPI.sendAsync('condenser_api.get_accounts', [["kids-trail"]])//WORKING QUERY
-    .then((resp) => {
-      if(resp) {
-        // console.log("Found account - response: ",resp)
-        //
-        // //TODO VALIDATE KEYS, EXTRACT FROM PASSWORD
-        //
-        // //CHECK IF BTS ACCOUNT EXISTS
-        // let counter = 1;
-        // let id = setInterval(()=>{
-        //   if(counter===13){
-        //     console.log("Count limit is exceeded. There is no account.");
-        //     clearInterval(id);
-        //   }
-        //
-        //   console.log("Get bts account counter: ",counter);
-        //   let acc = ChainStore.getAccount(accountName);
-        //   if(acc){
-        //     console.log("Account: ",acc);
-        //     console.log("---------------------------------");
-        //     clearInterval(id)
-        //
-        //     const ownerKey = dsteem.PrivateKey.fromLogin(accountName, password, 'owner');
-        //     const activeKey = dsteem.PrivateKey.fromLogin(accountName, password, 'active');
-        //     const postingKey = dsteem.PrivateKey.fromLogin(accountName, password, 'posting');
-        //     const memoKey = dsteem.PrivateKey.fromLogin(accountName, password, 'memo');
-        //
-        //
-        //     const ownerAuth = {
-        //       weight_threshold: 1,
-        //       account_auths: [],
-        //       key_auths: [[ownerKey.createPublic(), 1]],
-        //     };
-        //     const ownerAuthBTS = WalletDb.generateKeyFromPassword(accountName, 'owner', password);
-        //     console.log("ownerKey: ",ownerKey);
-        //     console.log("ownerKey.createPublic(): ",ownerKey.createPublic());
-        //     console.log("ownerAuth: ",ownerAuth);
-        //     console.log("ownerAuthBTS privKey: ",ownerAuthBTS.privKey);
-        //     console.log("ownerAuthBTS pubKey: ",ownerAuthBTS.pubKey);
-        //
-        //     const activeAuth = {
-        //       weight_threshold: 1,
-        //       account_auths: [],
-        //       key_auths: [[activeKey.createPublic(), 1]],
-        //     };
-        //     const activeAuthBTS = WalletDb.generateKeyFromPassword(accountName, 'active', password);
-        //     console.log("activeKey: ",activeKey);
-        //     console.log("activeKey.createPublic(): ",activeKey.createPublic());
-        //     console.log("activeAuth: ",activeAuth);
-        //     console.log("ownerAuthBTS privKey: ",activeAuthBTS.privKey);
-        //     console.log("ownerAuthBTS pubKey: ",activeAuthBTS.pubKey);
-        //
-        //     const postingAuth = {
-        //       weight_threshold: 1,
-        //       account_auths: [],
-        //       key_auths: [[postingKey.createPublic(), 1]],
-        //     };
-        //     const postingAuthBTS = WalletDb.generateKeyFromPassword(accountName, 'posting', password);
-        //     console.log("postingKey: ",postingKey);
-        //     console.log("postingKey.createPublic(): ",postingKey.createPublic());
-        //     console.log("postingAuth: ",postingAuth);
-        //     console.log("postingAuthBTS privKey: ",postingAuthBTS.privKey);
-        //     console.log("postingAuthBTS pubKey: ",postingAuthBTS.pubKey);
-        //
-        //   }
-        //   console.log("=================================");
-        //   counter++;
-        // },400);
+  console.log("ownerKey.createPublic(): ",ownerKey.createPublic(opts.addressPrefix));
+  console.log("ownerKey.createPublic().key: ",ownerKey.createPublic(opts.addressPrefix).key);
+  console.log("ownerKey: ",ownerKey);
+  console.log("ownerAuth: ",ownerAuth);
+  console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+  console.log("activeKey: ",activeKey);
+  console.log("activeAuth: ",activeAuth);
+  console.log("activeKey.createPublic(): ",activeKey.createPublic(opts.addressPrefix));
+  console.log("activeKey.createPublic().key: ",activeKey.createPublic(opts.addressPrefix).key);
+  console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+  console.log("postingKey: ",postingKey);
+  console.log("postingAuth: ",postingAuth);
+  console.log("postingKey.createPublic(): ",postingKey.createPublic(opts.addressPrefix));
+  console.log("postingKey.createPublic().key: ",postingKey.createPublic(opts.addressPrefix).key);
+  console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+  console.log("memoKey: ",memoKey);
+  console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
 
-      } else {
-        console.log("There is no such account: ",resp);
-      }
-    })
-    .catch((err)=>{
-      console.log("OK ERROR: ",err);
+  // const creator = 'init1';
+  const creator = 'banter';
+  const newName = accountName;;
+  const json_meta = '';
+  const owner = ownerAuth;
+  const active = activeAuth;
+  const posting = postingAuth;
+  const memo = memoKey;
+  const broadcast = true;
+  const fee = '5.000 SOCIAL';
 
-      //TODO VALIDATE KEYS, EXTRACT FROM PASSWORD
+  const op = [
+    'account_create',
+    {
+      creator,
+      new_account_name: newName,
+      json_metadata: json_meta,
+      owner,
+      active,
+      posting,
+      memo_key: memo,
+      broadcast,
+      fee,
+    }
+  ];
 
-      //CHECK IF BTS ACCOUNT EXISTS
-      let counter = 1;
-      let id = setInterval(()=>{
-        if(counter===13){
-          console.log("Count limit is exceeded. There is no account.");
-          clearInterval(id);
-        }
+  const privateKey = dsteem.PrivateKey.from('5K5f47eZWTy3X7oeDdFNa3U4XFicq2NDFFu1ZRaG6YhFGqbGV9W');// active private key
 
-        console.log("Get bts account counter: ",counter);
-        // let acc = ChainStore.getAccount(accountName);
-        // if(acc){
-        //   console.log("Account: ",acc);
-        //   console.log("---------------------------------");
-        //   clearInterval(id);
-        //
-        //   const ownerKey = dsteem.PrivateKey.fromLogin(accountName, password, 'owner');
-        //   const activeKey = dsteem.PrivateKey.fromLogin(accountName, password, 'active');
-        //   const postingKey = dsteem.PrivateKey.fromLogin(accountName, password, 'posting');
-        //   const memoKey = dsteem.PrivateKey.fromLogin(accountName, password, 'memo');
-        //
-        //   const ownerAuthBTS = WalletDb.generateKeyFromPassword(accountName, 'owner', password);
-        //   const activeAuthBTS = WalletDb.generateKeyFromPassword(accountName, 'active', password);
-        //   const postingAuthBTS = WalletDb.generateKeyFromPassword(accountName, 'posting', password);
-        //   // const memoAuthBTS = WalletDb.generateKeyFromPassword(accountName, 'memo', password);
-        //   //const memoKeyBTS = memoAuthBTS.pubKey;
-        //   /*
-        //   console.log("ownerKey.createPublic(): ",ownerKey.createPublic("BTS"));
-        //   console.log("ownerKey.createPublic().key: ",ownerKey.createPublic("BTS").key);
-        //   console.log("ownerKey: ",ownerKey);
-        //   console.log("ownerAuthBTS privKey: ",ownerAuthBTS.privKey);
-        //   console.log("ownerAuthBTS pubKey: ",ownerAuthBTS.pubKey);
-        //   console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
-        //   console.log("activeKey: ",activeKey);
-        //   console.log("activeKey.createPublic(): ",activeKey.createPublic("BTS"));
-        //   console.log("activeKey.createPublic().key: ",activeKey.createPublic("BTS").key);
-        //   console.log("activeAuthBTS privKey: ",activeAuthBTS.privKey);
-        //   console.log("activeAuthBTS pubKey: ",activeAuthBTS.pubKey);
-        //   console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
-        //   console.log("postingKey: ",postingKey);
-        //   console.log("postingKey.createPublic(): ",postingKey.createPublic("BTS"));
-        //   console.log("postingKey.createPublic().key: ",postingKey.createPublic("BTS").key);
-        //   console.log("postingAuthBTS privKey: ",postingAuthBTS.privKey);
-        //   console.log("postingAuthBTS pubKey: ",postingAuthBTS.pubKey);
-        //   console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
-        //   */
-        //
-        //
-        //   const creator = 'banter';
-        //   const newName = accountName;//'vasko-1-test30';
-        //   const json_meta = '';
-        //   const owner = ownerAuthBTS.pubKey;
-        //   const active = activeAuthBTS.pubKey;
-        //   const posting = postingAuthBTS.pubKey;//'BTS'+postingKey.createPublic().key;//activeAuthBTS.pubKey;
-        //   const memo = activeAuthBTS.pubKey;
-        //   const broadcast = true;
-        //
-        //   const params = [creator, newName, json_meta, owner, active, posting, memo, broadcast];
-        //
-        //   console.log("Account creation PARAMs: ",params);
-        //
-        //   // const body2 = {
-        //   //   jsonrpc: '2.0',
-        //   //   params: [
-        //   //     creator,
-        //   //     newName,
-        //   //     json_meta,
-        //   //     ownerKey.createPublic("BTS"),
-        //   //     activeKey.createPublic("BTS"),
-        //   //     postingKey.createPublic("BTS"),
-        //   //     memoKey.createPublic("BTS"),
-        //   //     true
-        //   //   ]
-        //   // };const body_string2 = JSON.stringify(body2);
-        //
-        //   const body = {
-        //     "jsonrpc": "2.0",
-        //     "params": params
-        //   };
-        //   const body_string = JSON.stringify(body);
-        //
-        //
-        //   // fetch( "http://localhost:3000/es-api/v0/ca",{
-        //   fetch( endpoints.CREATE_ACCOUNT,{
-        //     method:"POST",
-        //     headers: new Headers( { "Accept": "application/json", "Content-Type":"application/json" } ),
-        //     body: body_string
-        //     //mode: "no-cors"
-        //   }).then(
-        //     data => {
-        //       console.log("DATA: ", data)
-        //       data.json()
-        //         .then( json => {
-        //           console.log("response json: ", json);
-        //           //console.log("address: ", json.response.address);
-        //           //console.log("asset: ", json.response.asset);
-        //           if(json.response){
-        //             return dispatch({
-        //               type: TYPES.RGISTRATION_SUCCESS,
-        //               payload: {res: json.response}
-        //             })
-        //           } else {
-        //             return dispatch({
-        //               type: TYPES.RGISTRATION_ERROR,
-        //               payload: {res: json.error}
-        //             })
-        //           }
-        //         }, error => {
-        //             console.log( "error1: ",error  );
-        //             return dispatch({
-        //               type: TYPES.RGISTRATION_ERROR,
-        //               payload: {}
-        //             })
-        //         })
-        //     }, error => {
-        //       console.log( "error2: ",error  );
-        //       return dispatch({
-        //         type: TYPES.RGISTRATION_ERROR,
-        //         payload: {}
-        //       })
-        //     }).catch(err => {
-        //       console.log("fetch error3:", err);
-        //       return dispatch({
-        //         type: TYPES.RGISTRATION_ERROR,
-        //         payload: {}
-        //       })
-        //   });
-        //   // return;
-        //
-        //   // steemAPI.sendAsync('call', [
-        //   //   'condenser_api',
-        //   //   'create_account_with_keys',
-        //   //   params,
-        //   // ]).then((res)=>{
-        //   //   //debugger;
-        //   //   console.log("CREATE ACCOUNT RESPONSE: ",res);
-        //   //   //TODO Dispatch to reducer success
-        //   //   //Call getAccounts for the new created account
-        //   // }).catch((err)=>{
-        //   //   //debugger;
-        //   //   console.log("CREATE ACCOUNT ERROR: ",err);
-        //   //   //TODO DISPATCH to reducer with error
-        //   // });
-        //
-        // }
 
-        console.log("=================================");
-        counter++;
-      },200);
-    });
+  console.log("Account creation opts: ",op);
 
-  //TODO CHECK KEYS HERE
-  // if (!steemConnectAPI.options.accessToken) {
-  //
-  //
-  //   promise = Promise.reject(new Error('There is not accessToken present'));
-  // } else {
-  //   promise = steemConnectAPI.me().catch(() => dispatch(loginError()));
-  // }
+  dsteemClient.broadcast.sendOperations([op], privateKey).then(
+    function(result) {
+      console.log("[BANTER] CREATE ACCOUNT RESPONSE: ", result);
 
-  // return dispatch({
-  //   type: TYPES.LOGIN_SUCCESS,
-  //   payload: {
-  //     getAccountPromise,
-  //   }
-  // }).catch(() => dispatch(loginError()));
+    },
+    function(error) {
+      console.error("[BANTER] CREATE ACCOUNT ERROR: ", error);
+    }
+  );
+
 };
 
