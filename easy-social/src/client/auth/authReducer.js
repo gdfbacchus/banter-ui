@@ -26,6 +26,7 @@ export default (state = initialState, action) => {
       };
     case types.LOGIN_SUCCESS:
       if (action.meta && action.meta.refresh) return state;
+      console.log("[BANTER] LOGIN_SUCCESS: ", action.payload);
       return {
         ...state,
         isFetching: false,

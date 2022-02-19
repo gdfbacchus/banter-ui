@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 // import {ChainStore,FetchChain} from "bitsharesjs";
 // import {Apis, ChainConfig} from "bitsharesjs-ws";
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 import { injectIntl, FormattedMessage } from 'react-intl';
 import { Form, Select, Radio, Checkbox, Input } from 'antd';
 import {
@@ -15,7 +16,7 @@ import {
 } from "./registrationActions";
 
 // import Loading from '../components/Icon/Loading';
-
+import { reload } from '../auth/authActions';
 import {
   getIsAvailableAccount,
   // getIsAvailablePassword,
@@ -25,6 +26,7 @@ import {
 
 import './Settings.less';
 
+@withRouter
 @injectIntl
 @connect(
   state => (
@@ -35,7 +37,7 @@ import './Settings.less';
       regStatus: getRegStatus(state)
   }),
 
-  { register, startRegistration, resetRegistration, isAvailableAccount, isAvailablePassword }
+  { register, startRegistration, resetRegistration, isAvailableAccount, isAvailablePassword, reload }
 )
 
 export default class RegistrationPage extends React.Component {
@@ -188,6 +190,15 @@ export default class RegistrationPage extends React.Component {
     */
 
     //this.props.reload();
+  }
+
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    const { regStatus } = this.props;
+    if ((!prevProps.regStatus || prevProps.regStatus === 'error') && regStatus === 'success') {
+      console.log('[BANTER] HAS SUCCESSFUL registration and redirect to login')
+      console.log('[BANTER] props: ', this.props);
+      this.props.history.push('/login');
+    }
   }
 
   componentWillUnmount() {

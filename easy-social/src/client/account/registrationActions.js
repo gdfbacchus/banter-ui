@@ -147,7 +147,7 @@ export const resetRegistration = () => (dispatch) => {
   })
 };
 
-export const register = (accountName, password) => (dispatch, getState, { steemAPI,  }) => {
+export  const register = (accountName, password) => (dispatch, getState, { steemAPI,  }) => {
   console.log("Call Registration Action");
   const opts = {
     addressPrefix: 'BTS',
@@ -225,15 +225,56 @@ export const register = (accountName, password) => (dispatch, getState, { steemA
 
   console.log("Account creation opts: ",op);
 
-  dsteemClient.broadcast.sendOperations([op], privateKey).then(
-    function(result) {
-      console.log("[BANTER] CREATE ACCOUNT RESPONSE: ", result);
+  dsteemClient.broadcast.sendOperations([op], privateKey)
+    .then(
+      // function(result) {
+      //   console.log("[BANTER] CREATE ACCOUNT RESPONSE: ", result);
+      //
+      // },
+      // function(error) {
+      //   console.error("[BANTER] CREATE ACCOUNT ERROR: ", error);
+      // }
 
-    },
-    function(error) {
-      console.error("[BANTER] CREATE ACCOUNT ERROR: ", error);
-    }
-  );
+
+      data => {
+        console.log("[BANTER] CREATE ACCOUNT RESPONSE DATA: ", data);
+
+        dsteemClient.database.call('get_accounts', [[accountName]])
+          .then((_account) => {
+            console.log(`[BANTER] _account search:`, _account);
+            if(_account.length===0) {
+              console.log("[BANTER] There is no such ES account: ",_account);
+            }
+            else if(_account.length === 1) {
+              console.log("[BANTER] Found ES account - response: ",_account)
+              localStorage.setItem('registerdAccount', _account[0]);
+              return Promise.all([
+                dispatch({
+                  type: TYPES.RGISTRATION_SUCCESS,
+                  payload: {res: data, registeredAccount: _account[0]}
+                }),
+              ])
+
+            }
+          })
+          .catch((err)=>{
+            console.log("[BANTER] GET ACCOUNTS ERROR: ",err)
+          });
+      },
+      error => {
+        console.log( "[BANTER] CREATE ACCOUNT ERROR2: ",error  );
+        return dispatch({
+          type: TYPES.RGISTRATION_ERROR,
+          payload: {}
+        })
+      })
+    .catch(err => {
+      console.log("[BANTER] CREATE ACCOUNT ERROR3: ", err);
+      return dispatch({
+        type: TYPES.RGISTRATION_ERROR,
+        payload: {}
+      });
+    });
 
 };
 
