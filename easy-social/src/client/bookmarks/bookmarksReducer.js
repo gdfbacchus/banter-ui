@@ -10,9 +10,17 @@ const bookmarks = (state = initialState, action) => {
   switch (action.type) {
     case authActions.LOGIN_SUCCESS:
       if (action.meta && action.meta.refresh) return state;
+
+      let list = {}
+      if (action.payload.user_metadata && action.payload.user_metadata.bookmarks) {
+        list = action.payload.user_metadata.bookmarks
+      } else {
+        list = initialState.list;
+      }
+
       return {
         ...state,
-        list: action.payload.user_metadata.bookmarks || initialState.list,
+        list,
       };
     case bookmarksActions.TOGGLE_BOOKMARK_START:
       return {
