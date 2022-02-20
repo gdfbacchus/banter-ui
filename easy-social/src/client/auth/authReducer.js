@@ -7,6 +7,10 @@ const initialState = {
   loaded: false,
   user: {},
   userSCMetaData: {},
+  postingWif: '',
+  activeWif: '',
+  ownerWif: '',
+  memoWif: ''
 };
 
 const ACTION_TYPES = {
@@ -27,6 +31,7 @@ export default (state = initialState, action) => {
     case types.LOGIN_SUCCESS:
       if (action.meta && action.meta.refresh) return state;
       console.log("[BANTER] LOGIN_SUCCESS: ", action.payload);
+      const  { postingWif, activeWif, ownerWif, memoWif } = action.payload.wifs;
       return {
         ...state,
         isFetching: false,
@@ -34,6 +39,10 @@ export default (state = initialState, action) => {
         loaded: true,
         user: action.payload.account || state.user,
         userSCMetaData: action.payload.user_metadata,
+        postingWif,
+        activeWif,
+        ownerWif,
+        memoWif,
       };
     case types.LOGIN_ERROR:
       return {
@@ -63,6 +72,10 @@ export default (state = initialState, action) => {
         ...state,
         isAuthenticated: false,
         user: {},
+        postingWif: '',
+        activeWif: '',
+        ownerWif: '',
+        memoWif: '',
       };
     case types.UPDATE_SC2_USER_METADATA.SUCCESS:
       return {
@@ -85,5 +98,13 @@ export const getIsAuthFetching = state => state.isFetching;
 export const getIsLoaded = state => state.loaded;
 export const getIsReloading = state => state.isReloading;
 export const getAuthenticatedUser = state => state.user;
+export const getAuthenticatedUserWifs = state => {
+  return {
+    postingWif: state.postingWif,
+    activeWif: state.activeWif,
+    ownerWif: state.ownerWif,
+    memoWif: state.memoWif,
+  }
+};
 export const getAuthenticatedUserName = state => state.user.name;
 export const getAuthenticatedUserSCMetaData = state => state.userSCMetaData;

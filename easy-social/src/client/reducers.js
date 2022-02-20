@@ -51,6 +51,7 @@ export const getIsAuthFetching = state => fromAuth.getIsAuthFetching(state.auth)
 export const getIsLoaded = state => fromAuth.getIsLoaded(state.auth);
 export const getIsReloading = state => fromAuth.getIsReloading(state.auth);
 export const getAuthenticatedUser = state => fromAuth.getAuthenticatedUser(state.auth);
+export const getAuthenticatedUserWifs = state => fromAuth.getAuthenticatedUserWifs(state.auth);
 export const getAuthenticatedUserName = state => fromAuth.getAuthenticatedUserName(state.auth);
 export const getAuthenticatedUserSCMetaData = state =>
   fromAuth.getAuthenticatedUserSCMetaData(state.auth);

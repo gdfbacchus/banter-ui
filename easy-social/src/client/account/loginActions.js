@@ -41,6 +41,14 @@ function isValidAccount (account, accountName, password) {
   const activeKeyFromPrivateKey = activeKey.createPublic(addressPrefix).toString();
   const postingKeyFromPrivateKey = postingKey.createPublic(addressPrefix).toString();
 
+  const postingWif = postingKey.toString();
+  const activeWif = activeKey.toString();
+  const ownerWif  = ownerKey.toString();
+  const memoWif = dsteem.PrivateKey.fromLogin(accountName, password, 'memo').toString();
+
+  console.log("[BANTER] -------------------------------------------------------------------------");
+  console.log("[BANTER] postigWif: ", localStorage.getItem('postigWif'));
+
   console.log("[BANTER] -------------------------------------------------------------------------");
   console.log("[BANTER] generated owner pub key : ", ownerKeyFromPrivateKey);
   console.log("[BANTER] generated active pub key : ", activeKeyFromPrivateKey);
@@ -60,7 +68,13 @@ function isValidAccount (account, accountName, password) {
     ) {
     isValid = true;
   }
-  return isValid;
+  return {
+    isValid,
+    postingWif,
+    activeWif,
+    ownerWif,
+    memoWif,
+  };
 }
 
 export const login = (accountName, password) => (dispatch, getState, { steemAPI }) => {
@@ -77,10 +91,19 @@ export const login = (accountName, password) => (dispatch, getState, { steemAPI 
         localStorage.setItem('loginAccount', _account[0]);
 
         const isValidAcc = isValidAccount(_account[0], accountName, password);
-        if (isValidAcc) {
+        if (isValidAcc.isValid) {
+          const  { postingWif, activeWif, ownerWif, memoWif } = isValidAcc;
           return dispatch({
               type: TYPES.LOGIN_SUCCESS,
-              payload: {account: _account[0]},
+              payload: {
+                account: _account[0],
+                wifs: {
+                  postingWif,
+                  activeWif,
+                  ownerWif,
+                  memoWif,
+                }
+              },
 
           });
         } else {
