@@ -88,7 +88,7 @@ class Search extends React.Component {
     return (
       <div className="settings-layout container">
         <Helmet>
-          <title>{intl.formatMessage({ id: 'search', defaultMessage: 'Search' })} - EasySocial</title>
+          <title>{intl.formatMessage({ id: 'search', defaultMessage: 'Search' })} - Banter</title>
         </Helmet>
         <Affix className="leftContainer" stickPosition={77}>
           <div className="left">

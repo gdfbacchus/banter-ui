@@ -12,7 +12,7 @@ import LinksRightNav from '../components/Sidebar/LinksRightNav';
 const Activity = ({ intl }) => (
   <div className="shifted">
     <Helmet>
-      <title>{intl.formatMessage({ id: 'activity', defaultMessage: 'Activity' })} - EasySocial</title>
+      <title>{intl.formatMessage({ id: 'activity', defaultMessage: 'Activity' })} - Banter</title>
     </Helmet>
     <div className="feed-layout container">
       <Affix className="leftContainer" stickPosition={77}>

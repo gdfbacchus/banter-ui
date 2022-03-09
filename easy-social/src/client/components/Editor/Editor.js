@@ -251,7 +251,7 @@ class Editor extends React.Component {
       <Form className="Editor" layout="vertical" onSubmit={this.handleSubmit}>
         <Helmet>
           <title>
-            {intl.formatMessage({ id: 'write_post', defaultMessage: 'Write post' })} - EasySocial
+            {intl.formatMessage({ id: 'write_post', defaultMessage: 'Write post' })} - Banter
           </title>
         </Helmet>
         <Form.Item

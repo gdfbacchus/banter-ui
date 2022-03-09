@@ -168,7 +168,7 @@ export default class User extends React.Component {
     const hasCover = !!profile.cover_image;
     //console.log("User metadata cover_image 2: ",profile.cover_image);
     //console.log("hasCover: ",hasCover);
-    const title = `${displayedUsername} - EasySocial`;
+    const title = `${displayedUsername} - Banter`;
 
     const isSameUser = authenticated && authenticatedUser.name === username;
 
@@ -190,7 +190,7 @@ export default class User extends React.Component {
           <meta property="og:type" content="article" />
           <meta property="og:url" content={url} />
           <meta property="og:description" content={desc} />
-          <meta property="og:site_name" content="EasySocial" />
+          <meta property="og:site_name" content="Banter" />
 
           {/*<meta property="twitter:card" content={image ? 'summary_large_image' : 'summary'} />*/}
           {/*<meta property="twitter:title" content={title} />*/}

@@ -27,7 +27,7 @@ const PostedFrom = ({ post }) => {
           )
         }
       >
-        <span className="PostedFrom__text">EasySocial</span>
+        <span className="PostedFrom__text">Banter</span>
       </BTooltip>
     </span>
   );
