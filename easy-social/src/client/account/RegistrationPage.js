@@ -1,9 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Helmet from 'react-helmet';
-import {ChainStore,FetchChain} from "bitsharesjs";
-import {Apis, ChainConfig} from "bitsharesjs-ws";
+// import Helmet from 'react-helmet';
+// import {ChainStore,FetchChain} from "bitsharesjs";
+// import {Apis, ChainConfig} from "bitsharesjs-ws";
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 import { injectIntl, FormattedMessage } from 'react-intl';
 import { Form, Select, Radio, Checkbox, Input } from 'antd';
 import {
@@ -14,28 +15,29 @@ import {
   resetRegistration
 } from "./registrationActions";
 
-import Loading from '../components/Icon/Loading';
-
+// import Loading from '../components/Icon/Loading';
+import { reload } from '../auth/authActions';
 import {
   getIsAvailableAccount,
-  getIsAvailablePassword,
+  // getIsAvailablePassword,
   getIsProcessing,
   getRegStatus
 } from '../reducers';
 
 import './Settings.less';
 
+@withRouter
 @injectIntl
 @connect(
   state => (
     {
       availableAccountName: getIsAvailableAccount(state),
-      availablePassword: getIsAvailablePassword(state),
+      // availablePassword: getIsAvailablePassword(state),
       isProcessing: getIsProcessing(state),
       regStatus: getRegStatus(state)
   }),
 
-  { register, startRegistration, resetRegistration, isAvailableAccount, isAvailablePassword }
+  { register, startRegistration, resetRegistration, isAvailableAccount, isAvailablePassword, reload }
 )
 
 export default class RegistrationPage extends React.Component {
@@ -127,19 +129,16 @@ export default class RegistrationPage extends React.Component {
 
   _updateState(object) {
     //console.log("this.state: ", this.state)
-    let dynamicGlobal = ChainStore.getObject("2.1.0");
-    if(dynamicGlobal) {
-      // this.setState({dynamicGlobal: dynamicGlobal}, () => {
-      //   console.log("dynamicGlobal: ", dynamicGlobal)
-      // });
-      console.log("dynamicGlobal: ", dynamicGlobal)
-    }
+    // let dynamicGlobal = ChainStore.getObject("2.1.0");
+    // if(dynamicGlobal) {
+    //   // this.setState({dynamicGlobal: dynamicGlobal}, () => {
+    //   //   console.log("dynamicGlobal: ", dynamicGlobal)
+    //   // });
+    //   console.log("dynamicGlobal: ", dynamicGlobal)
+    // }
 
   }
 
-  _initBtsCallBack(status) {
-
-  }
   componentDidMount() {
     /*
     if(!Apis.instance().db_api()){
@@ -193,17 +192,29 @@ export default class RegistrationPage extends React.Component {
     //this.props.reload();
   }
 
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    const { regStatus } = this.props;
+    if ((!prevProps.regStatus || prevProps.regStatus === 'error') && regStatus === 'success') {
+      console.log('[BANTER] HAS SUCCESSFUL registration and redirect to login')
+      console.log('[BANTER] props: ', this.props);
+      this.props.history.push('/login');
+    }
+  }
+
   componentWillUnmount() {
     this.props.resetRegistration();
   }
   onUpdate(event) {
     event.persist();
-
-    // console.log("target value: ",event.target.value);
-    // console.log("target input name: ",event.target.name);
-    // console.log("target input type: ",event.target.type);
+    console.log("[BANTER] onUpdate() ------------------------------------------------------------");
+    console.log("[BANTER] target value: ",event.target.value);
+    console.log("[BANTER] target input name: ",event.target.name);
+    console.log("[BANTER] target input type: ",event.target.type);
+    console.log("------------------------------------------------------------");
     this.setState({ [event.target.name]: event.target.value }, ()=>{
-      if(event.target.name==="accountName"){this.validateForm(event)}
+      if(event.target.name==="accountName"){
+        this.validateForm(event)
+      }
     });
 
   }
@@ -235,22 +246,22 @@ export default class RegistrationPage extends React.Component {
 
 
     this.props.isAvailableAccount(accountName);
-    this.props.isAvailablePassword(accountName, pass);
+    // this.props.isAvailablePassword(accountName, pass);
 
-    // const confPass = this.state.confPassword;
-    // const avAccountName = this.props.availableAccountName;
+    const confPass = this.state.confPassword;
+    const avAccountName = this.props.availableAccountName;
     // const avPassword = this.props.availablePassword;
-    //
-    // console.log("avAccountName: ",avAccountName);
+
+    console.log("avAccountName: ",avAccountName);
     // console.log("avPassword: ",avPassword);
 
-    // if(pass === confPass && avAccountName) {
-    //   //this.setState({isValidForm: true});
-    //   return true;
-    // } else {
-    //   //this.setState({isValidForm: false, isDisabledSubmit: true});
-    //   return false;
-    // }
+    if(pass === confPass && avAccountName) {
+      //this.setState({isValidForm: true});
+      return true;
+    } else {
+      //this.setState({isValidForm: false, isDisabledSubmit: true});
+      return false;
+    }
 
 
   }
@@ -270,7 +281,7 @@ export default class RegistrationPage extends React.Component {
 
     let diss = !(pass===confPass
                   && !this.state.isDisabledSubmit
-                    && this.props.availablePassword
+                    // && this.props.availablePassword
                       && this.props.availableAccountName
                         && this.props.regStatus === '');
     console.log("Reg button is disabled[" + diss + "]");
@@ -298,14 +309,12 @@ export default class RegistrationPage extends React.Component {
               {!this.props.regStatus || this.props.regStatus === 'error'?
               <div className="Settings__section">
                 <div className="Invite__input-container">
+                  {/*ACCOUNT NAME*/}
                   <Form.Item
                     label={
                         <span className="Editor__label">
-                          Account name - to register use any bitshares web account based username up to 16 symbols.
+                          Account name - to register use account based username up to 16 symbols.
                         </span>
-
-
-
                     }
                   >
                     <Input
@@ -318,19 +327,17 @@ export default class RegistrationPage extends React.Component {
                     />
                     {!this.props.availableAccountName && this.state.accountName.length > 0 ?
                       <div>
-                        <div style={{color:"red"}}>Account name is already taken, or it is unavailable.
-                        </div>
-                        <div>
-                          To register simply log in with your Bitshares account.<br />
-                          If you don't have a Bitshares account or would like to start a new one click <a href="https://exchange.easydex.net/create-account/password" target="_blank" style={{fontWeight: 700}}>here</a>.
+                        <div style={{color:"red"}}>
+                          Account name is already taken, or it is unavailable.
                         </div>
                       </div>: null}
                   </Form.Item>
 
+                  {/*PASSWORD*/}
                   <Form.Item
                     label={
                       <span className="Editor__label">
-                      Password - your bitshares wallet password
+                      Password
                     </span>
                     }
                   >
@@ -342,11 +349,13 @@ export default class RegistrationPage extends React.Component {
                       type="password"
                       name="password"
                     />
-                    {!this.props.availablePassword && pass.length > 0 ?
+                    {/*{!this.props.availablePassword && pass.length > 0 ?*/}
+                    {pass.length < 8 ?
                       <div style={{color:"red"}}>Incorrect password.
                       </div> : null}
                   </Form.Item>
 
+                  {/*CONFIRM PASSWORD*/}
                   <Form.Item
                     label={
                       <span className="Editor__label">

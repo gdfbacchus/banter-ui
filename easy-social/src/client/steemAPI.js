@@ -4,12 +4,8 @@ const options = {
   timeout: 15000
 };
 
- // const steemUrl = process.env.STEEMJS_URL || 'https://api.steemit.com';
-// const steemUrl = process.env.STEEMJS_URL || 'http://79.143.179.62:8080';
-// const steemUrl = process.env.STEEMJS_URL || 'http://localhost:8080';
-// const steemUrl = process.env.STEEMJS_URL || 'http://79.143.179.62:8282';//PROXY
-// const steemUrl = process.env.STEEMJS_URL || 'https://proxy.easysocial.life';//PROXY
-const easysocialUrl = process.env.STEEMJS_URL || 'https://proxy.banter.network';//PROXY
+const easysocialUrl = process.env.STEEMJS_URL || 'https://node.banter.network';
+// const easysocialUrl = process.env.STEEMJS_URL || 'https://proxy.banter.network';//PROXY
 
 // console.log('Client steemAPI process.env.STEEMJS_URL: ',process.env.STEEMJS_URL);
 // console.log("Client steemUrl: ", steemUrl);
@@ -17,6 +13,13 @@ const easysocialUrl = process.env.STEEMJS_URL || 'https://proxy.banter.network';
 //console.log('Client easysocial _URL: ',easysocialUrl);
 
 const client = createClient(easysocialUrl, options);
+console.log('[BANTER] easysocialUrl: ', easysocialUrl);
+console.log('[BANTER] client: ', client);
+console.log('[BANTER] process.env.STEEMJS_URL: ', process.env.STEEMJS_URL);
+console.log('[BANTER] process.env.PORT: ', process.env.PORT);
+
+
+
 client.sendAsync = (message, params) =>
   new Promise((resolve, reject) => {
     //rpc client -> send message and params

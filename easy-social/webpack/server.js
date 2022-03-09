@@ -10,8 +10,8 @@ module.exports = function createConfig(env = 'dev') {
   const IS_DEV = env === 'dev';
 
   console.log("WEBPACK SERVER -> env: ", env);
-  console.log("WEBPACK CLIENT -> IS_DEV: ", IS_DEV);
-  console.log("WEBPACK CLIENT -> paths.build: ", paths.build);
+  console.log("WEBPACK SERVER -> IS_DEV: ", IS_DEV);
+  console.log("WEBPACK SERVER -> paths.build: ", paths.build);
 
   const config = {
     mode: IS_DEV ? 'development' : 'production',

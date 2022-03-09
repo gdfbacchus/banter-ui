@@ -8,7 +8,7 @@ import { getAccountWithFollowingCount as getAccountWithFollowingCountAPI } from 
 export const GET_ACCOUNT = createAsyncActionType('@users/GET_ACCOUNT');
 
 const dsteem = require('dsteem');
-import WalletDb from "../account/loginBts/stores/WalletDb";
+// import WalletDb from "../account/loginBts/stores/WalletDb";
 
 export const FOLLOW_USER = '@user/FOLLOW_USER';
 export const FOLLOW_USER_START = '@user/FOLLOW_USER_START';
@@ -59,9 +59,9 @@ export const followUser = username => (dispatch, getState, { dsteemClient }) => 
 };
 
 const getPostingWif = (posting_pubk)=> {
-  const private_posting_key = WalletDb.getPrivateKey(posting_pubk);
-  const wifP = private_posting_key.toWif();
-  return wifP
+  // const private_posting_key = WalletDb.getPrivateKey(posting_pubk);
+  // const wifP = private_posting_key.toWif();
+  // return wifP
 };
 
 export const UNFOLLOW_USER = '@user/UNFOLLOW_USER';

@@ -16,10 +16,12 @@ import EditorInput from './EditorInput';
 import { remarkable } from '../Story/Body';
 import BodyContainer from '../../containers/Story/BodyContainer';
 import './Editor.less';
+import {PublicKey} from "dsteem/lib/crypto";
+const dsteem = require('dsteem');
 
-import {ChainStore, PrivateKey, key, Aes} from "bitsharesjs";
-import {Apis, ChainConfig} from "bitsharesjs-ws";
-import WalletDb from "../../account/loginBts/stores/WalletDb";
+// import {ChainStore, PrivateKey, key, Aes} from "bitsharesjs";
+// import {Apis, ChainConfig} from "bitsharesjs-ws";
+// import WalletDb from "../../account/loginBts/stores/WalletDb";
 
 @injectIntl
 @requiresLogin
@@ -30,6 +32,7 @@ class Editor extends React.Component {
     intl: PropTypes.shape().isRequired,
     form: PropTypes.shape().isRequired,
     user: PropTypes.shape().isRequired,
+    authenticatedUserWifs: PropTypes.shape().isRequired,
     title: PropTypes.string,
     topics: PropTypes.arrayOf(PropTypes.string),
     body: PropTypes.string,
@@ -207,22 +210,18 @@ class Editor extends React.Component {
     e.preventDefault();
 
     this.props.form.validateFieldsAndScroll((err, values) => {
-      if (err) this.props.onError();
+      if (err) {
+        console.log("[BANTER] POST err: ", err)
+        this.props.onError();
+      }
       else {
-        const posting_pubk = this.props.user.posting.key_auths[0][0];
-        //console.log("PUBLIC POSTING KEY: ",posting_pubk)
-        const private_posting_key = WalletDb.getPrivateKey(posting_pubk);
-        const wifP = private_posting_key.toWif();
-        //console.log("PRIVATE POSTING KEY wifP : ", wifP);
-
-
-        //return;
+        console.log("[BANTER] authenticatedUserWifs: ", this.props.authenticatedUserWifs);
+        const wifP = this.props.authenticatedUserWifs.postingWif
         const isForUpdate = !!this.props.draftId;
-        //console.log("isForUpdate",isForUpdate)
+
         if(isForUpdate){
           values.isUpdating = true;
         }
-        //console.log("POST values: ", values);
 
         this.props.onSubmit(values,wifP);
       }

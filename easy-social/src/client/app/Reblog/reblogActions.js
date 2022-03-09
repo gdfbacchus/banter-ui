@@ -2,7 +2,7 @@ import store from 'store';
 import { createAction } from 'redux-actions';
 
 const dsteem = require('dsteem');
-import WalletDb from "../../account/loginBts/stores/WalletDb";
+// import WalletDb from "../../account/loginBts/stores/WalletDb";
 
 export const REBLOG_POST = '@reblog/REBLOG_POST';
 export const REBLOG_POST_START = '@reblog/REBLOG_POST_START';
@@ -64,9 +64,9 @@ export const reblog = postId => (dispatch, getState, { dsteemClient }) => {
   });
 };
 const getPostingWif = (posting_pubk)=> {
-  const private_posting_key = WalletDb.getPrivateKey(posting_pubk);
-  const wifP = private_posting_key.toWif();
-  return wifP
+  // const private_posting_key = WalletDb.getPrivateKey(posting_pubk);
+  // const wifP = private_posting_key.toWif();
+  // return wifP
 };
 export const getRebloggedList = () => dispatch => {
   const list = store.get('reblogged') || [];

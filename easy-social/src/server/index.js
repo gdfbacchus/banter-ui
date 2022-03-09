@@ -4,8 +4,9 @@ import app from './app';
 const server = http.createServer(app);
 
 let currentApp = app;
-
-server.listen(process.env.PORT || 3000, () => console.log('SSR started'));
+const port = process.env.PORT || 3001;
+console.log('PORT: ', port);
+server.listen(port, () => console.log('SSR started'));
 
 if (module.hot) {
   console.log('✅  Server-side HMR Enabled!');

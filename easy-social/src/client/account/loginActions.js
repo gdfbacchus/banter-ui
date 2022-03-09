@@ -1,9 +1,14 @@
 import { createAction } from 'redux-actions';
-import {Apis} from "bitsharesjs-ws";
-import {ChainStore} from "bitsharesjs";
-import WalletDb from "./loginBts/stores/WalletDb";
+// import {Apis} from "bitsharesjs-ws";
+// import {ChainStore} from "bitsharesjs";
+// import WalletDb from "./loginBts/stores/WalletDb";
 
-import { getAllFollowing } from '../helpers/apiHelpers';
+// import { getAllFollowing } from '../helpers/apiHelpers';
+import dsteemClient from '../dsteemAPI';
+import {LOGIN_ERROR} from "../auth/authActions";
+
+const dsteem = require('dsteem');
+
 
 const TYPES = {
   LOGIN_START: '@es_auth/LOGIN_START',
@@ -14,112 +19,105 @@ const TYPES = {
 const GET_FOLLOWING = '@user/GET_FOLLOWING';
 const loginError = createAction(TYPES.LOGIN_ERROR);
 
+function isValidAccount (account, accountName, password) {
+  let isValid = false;
+
+  const addressPrefix = 'BTS';
+  const ownerKeyFromAccount = account.owner.key_auths[0][0];
+  const activeKeyFromAccount = account.active.key_auths[0][0];
+  const postingKeyFromAccount = account.posting.key_auths[0][0];
+  const memoKeyFromAccount = account.memo_key;
+  console.log("[BANTER] -------------------------------------------------------------------------");
+  console.log("[BANTER] owner pub key : ", ownerKeyFromAccount);
+  console.log("[BANTER] active pub key : ", activeKeyFromAccount);
+  console.log("[BANTER] posting pub key : ", postingKeyFromAccount);
+  console.log("[BANTER] memo pub key : ", memoKeyFromAccount);
+  const ownerKey = dsteem.PrivateKey.fromLogin(accountName, password, 'owner');
+  const activeKey = dsteem.PrivateKey.fromLogin(accountName, password, 'active');
+  const postingKey = dsteem.PrivateKey.fromLogin(accountName, password, 'posting');
+  const memoKey = dsteem.PrivateKey.fromLogin(accountName, password, 'memo').createPublic(addressPrefix).toString();;
+
+  const ownerKeyFromPrivateKey = ownerKey.createPublic(addressPrefix).toString();
+  const activeKeyFromPrivateKey = activeKey.createPublic(addressPrefix).toString();
+  const postingKeyFromPrivateKey = postingKey.createPublic(addressPrefix).toString();
+
+  const postingWif = postingKey.toString();
+  const activeWif = activeKey.toString();
+  const ownerWif  = ownerKey.toString();
+  const memoWif = dsteem.PrivateKey.fromLogin(accountName, password, 'memo').toString();
+
+  console.log("[BANTER] -------------------------------------------------------------------------");
+  console.log("[BANTER] postigWif: ", localStorage.getItem('postigWif'));
+
+  console.log("[BANTER] -------------------------------------------------------------------------");
+  console.log("[BANTER] generated owner pub key : ", ownerKeyFromPrivateKey);
+  console.log("[BANTER] generated active pub key : ", activeKeyFromPrivateKey);
+  console.log("[BANTER] generated posting pub key : ", postingKeyFromPrivateKey);
+  console.log("[BANTER] generated memo pub key : ", memoKey);
+  console.log("[BANTER] -------------------------------------------------------------------------");
+
+  console.log("[BANTER] ownerKeyFromAccount===ownerKeyFromPrivateKey : ", ownerKeyFromAccount===ownerKeyFromPrivateKey);
+  console.log("[BANTER] activeKeyFromAccount===activeKeyFromPrivateKey : ", activeKeyFromAccount===activeKeyFromPrivateKey);
+  console.log("[BANTER] postingKeyFromAccount===postingKeyFromPrivateKey : ", postingKeyFromAccount===postingKeyFromPrivateKey);
+  console.log("[BANTER] memoKeyFromAccount===memoKey : ", memoKeyFromAccount===memoKey);
+  console.log("[BANTER] -------------------------------------------------------------------------");
+  if (ownerKeyFromAccount===ownerKeyFromPrivateKey
+      && activeKeyFromAccount===activeKeyFromPrivateKey
+      && postingKeyFromAccount===postingKeyFromPrivateKey
+      && memoKeyFromAccount===memoKey
+    ) {
+    isValid = true;
+  }
+  return {
+    isValid,
+    postingWif,
+    activeWif,
+    ownerWif,
+    memoWif,
+  };
+}
 
 export const login = (accountName, password) => (dispatch, getState, { steemAPI }) => {
-  // console.log("Call Login Action");
-  const state = getState();
+  console.log("Call Login Action");
 
-  let promise = Promise.resolve(null);
+  dsteemClient.database.call('get_accounts', [[accountName]])
+    .then((_account) => {
+      console.log(`[BANTER] login _account search:`, _account);
+      if(_account.length===0) {
+        console.log("[BANTER] login - There is no such ES account: ",_account);
+      }
+      else if(_account.length === 1) {
+        console.log("[BANTER] login - Found ES account - response: ",_account)
+        localStorage.setItem('loginAccount', _account[0]);
 
-  // if (getIsLoaded(state)) {
-  //   promise = Promise.resolve(null);
-  // }
+        const isValidAcc = isValidAccount(_account[0], accountName, password);
+        if (isValidAcc.isValid) {
+          const  { postingWif, activeWif, ownerWif, memoWif } = isValidAcc;
+          return dispatch({
+              type: TYPES.LOGIN_SUCCESS,
+              payload: {
+                account: _account[0],
+                wifs: {
+                  postingWif,
+                  activeWif,
+                  ownerWif,
+                  memoWif,
+                }
+              },
 
-  let getAccountPromise = steemAPI.sendAsync('condenser_api.get_accounts', [[accountName]])
-  // let getAccountPromise = steemAPI.sendAsync('condenser_api.get_accounts', [["vasko-1-test31"]])
-  // steemAPI.sendAsync('condenser_api.get_accounts', [["kids-trail"]])//WORKING QUERY
-    .then((resp) => {
-      if(resp.length === 1) {
-        console.log("Found ES account - response: ",resp)
+          });
+        } else {
+          return dispatch({
+            type: TYPES.LOGIN_ERROR,
+            payload: {account: _account[0]},
 
-        //TODO VALIDATE KEYS, EXTRACT FROM PASSWORD
+          });
 
-        //CHECK IF BTS ACCOUNT EXISTS
-        let counter = 1;
-        let id = setInterval(()=>{
-          if(counter===13){
-            console.log("There is no BTS account[undefined].");
-            clearInterval(id);
-            return dispatch({
-              type: TYPES.LOGIN_ERROR,
-              payload: {}
-            })//.catch(() => dispatch(loginError()));
-          }
-        })
-        //console.log("Get bts account counter: ",counter);
-        /*  let acc = ChainStore.getAccount(accountName);
-         if(acc){
-           //console.log("Found BTS Account: ",acc);
-           //console.log("---------------------------------");
-           clearInterval(id);
-
-           let isLocked1 = WalletDb.isLocked();
-           //console.log("is locked before login: ", isLocked1)
-           //TODO TRY TO LOG IN
-           WalletDb.validatePassword(
-             password || "",
-             true, //unlock
-             accountName
-           ).then(({success, cloudMode})=>{
-             // console.log("MARKER success: ",success);
-             // console.log("cloudMode: ",cloudMode);
-             let isLocked = WalletDb.isLocked();
-             // console.log("is locked after login: ", isLocked)
-             if (isLocked) {
-               // this.setState({passwordError: true});
-               console.log("Login error.");
-               return dispatch({
-                 type: TYPES.LOGIN_ERROR,
-                 payload: {}
-               })//.catch(() => dispatch(loginError()));
-             } else if(!isLocked){
-               console.log("Account[" + accountName + "] is logged in.");
-
-               dispatch({
-                 type: GET_FOLLOWING,
-                 meta: accountName,
-                 payload: {
-                   promise: getAllFollowing(accountName),
-                 },
-               });
-               //user: action.payload.account || state.user,
-               //userSCMetaData: action.payload.user_metadata,
-               return dispatch({
-                 type: TYPES.LOGIN_SUCCESS,
-                 payload: {
-                   account: resp[0],
-                   user_metadata:{}
-                 }
-               })//.catch(() => dispatch(loginError()));
-
-             }
-           });
-         }
-         //console.log("=================================");
-         counter++;
-       },100); */
-
-      } else {
-        console.log("There is no such account: ",resp)
+        }
       }
     })
     .catch((err)=>{
-      console.log("ERROR: ",err)
+      console.log("[BANTER] GET ACCOUNTS ERROR: ",err)
     });
 
-  //TODO CHECK KEYS HERE
-  // if (!steemConnectAPI.options.accessToken) {
-  //
-  //
-  //   promise = Promise.reject(new Error('There is not accessToken present'));
-  // } else {
-  //   promise = steemConnectAPI.me().catch(() => dispatch(loginError()));
-  // }
-
-  // return dispatch({
-  //   type: TYPES.LOGIN_SUCCESS,
-  //   payload: {
-  //     getAccountPromise,
-  //   }
-  // }).catch(() => dispatch(loginError()));
 };

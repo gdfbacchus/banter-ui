@@ -401,7 +401,9 @@ class Topnav extends React.Component {
           </div>
           <div className="center">
             <div className="">
-              <div style={{width: '100%', fontSize: '1.2em', textAlign:'center',color: '#992499', fontWeight: '700'}}>If you like to support this project join our ICO <a href="https://exchange.easydex.net/market/EZLIF.PRESOCIAL_BTS" target="_blank" >here</a></div>
+              <div style={{width: '100%', fontSize: '1.2em', textAlign:'center',color: '#992499', fontWeight: '700'}}>
+                Banter
+              </div>
             </div>
           </div>
           {/*<div className={classNames('center', { mobileVisible: searchBarActive })}>*/}

@@ -15,6 +15,7 @@ import DeleteDraftModal from './DeleteDraftModal';
 
 import {
   getAuthenticatedUser,
+  getAuthenticatedUserWifs,
   getDraftPosts,
   getIsEditorLoading,
   getIsEditorSaving,
@@ -35,6 +36,7 @@ import Affix from '../../components/Utils/Affix';
 @connect(
   (state, props) => ({
     user: getAuthenticatedUser(state),
+    authenticatedUserWifs: getAuthenticatedUserWifs(state),
     draftPosts: getDraftPosts(state),
     loading: getIsEditorLoading(state),
     saving: getIsEditorSaving(state),
@@ -56,6 +58,7 @@ import Affix from '../../components/Utils/Affix';
 class Write extends React.Component {
   static propTypes = {
     user: PropTypes.shape().isRequired,
+    authenticatedUserWifs: PropTypes.shape().isRequired,
     draftPosts: PropTypes.shape().isRequired,
     loading: PropTypes.bool.isRequired,
     intl: PropTypes.shape().isRequired,
@@ -271,6 +274,7 @@ class Write extends React.Component {
               onSubmit={this.onSubmit}
               onDelete={this.onDelete}
               user={this.props.user}
+              authenticatedUserWifs={this.props.authenticatedUserWifs}
               getStausSendingPostOrComment={this.props.getStausSendingPostOrComment}
               postCommentResetStatus = {this.props.postCommentResetStatus}
             />

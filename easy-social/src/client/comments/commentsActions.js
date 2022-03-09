@@ -8,7 +8,7 @@ import {
   setPostCommentErrorStatus
 } from '../post/postActions';
 const dsteem = require('dsteem');
-import WalletDb from "../account/loginBts/stores/WalletDb";
+// import WalletDb from "../account/loginBts/stores/WalletDb";
 export const GET_COMMENTS = 'GET_COMMENTS';
 export const GET_COMMENTS_START = 'GET_COMMENTS_START';
 export const GET_COMMENTS_SUCCESS = 'GET_COMMENTS_SUCCESS';
@@ -178,11 +178,11 @@ export const sendComment = (parentPost, body, isUpdating = false, originalCommen
 };
 
 const getPostingWif = (posting_pubk)=> {
-  //console.log("LIKE POST PUBLIC POSTING KEY: ",posting_pubk);
-  const private_posting_key = WalletDb.getPrivateKey(posting_pubk);
-  const wifP = private_posting_key.toWif();
-  //console.log("LIKE POST PRIVATE POSTING KEY wifP : ", wifP);
-  return wifP
+  // //console.log("LIKE POST PUBLIC POSTING KEY: ",posting_pubk);
+  // const private_posting_key = WalletDb.getPrivateKey(posting_pubk);
+  // const wifP = private_posting_key.toWif();
+  // //console.log("LIKE POST PRIVATE POSTING KEY wifP : ", wifP);
+  // return wifP
 };
 
 export const likeComment = (commentId, weight = 10000, vote = 'like', retryCount = 0) => (

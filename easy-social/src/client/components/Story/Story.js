@@ -20,7 +20,7 @@ import {
 } from '../../helpers/postHelpers';
 import {getAccount} from '../../helpers/apiHelpers';
 import withAuthActions from '../../auth/withAuthActions';
-import WalletDb from "../../account/loginBts/stores/WalletDb";
+// import WalletDb from "../../account/loginBts/stores/WalletDb";
 import BTooltip from '../BTooltip';
 import ReputationTag from '../ReputationTag';
 import StoryPreview from './StoryPreview';
@@ -160,12 +160,12 @@ class Story extends React.Component {
   }
 
   getPostingWif() {
-    const posting_pubk = this.props.user.posting.key_auths[0][0];
-    //console.log("STORY LIKE POST PUBLIC POSTING KEY: ",posting_pubk)
-    const private_posting_key = WalletDb.getPrivateKey(posting_pubk);
-    const wifP = private_posting_key.toWif();
-    //console.log("STORY LIKE POST PRIVATE POSTING KEY wifP : ", wifP);
-    return wifP
+    // const posting_pubk = this.props.user.posting.key_auths[0][0];
+    // //console.log("STORY LIKE POST PUBLIC POSTING KEY: ",posting_pubk)
+    // const private_posting_key = WalletDb.getPrivateKey(posting_pubk);
+    // const wifP = private_posting_key.toWif();
+    // //console.log("STORY LIKE POST PRIVATE POSTING KEY wifP : ", wifP);
+    // return wifP
   }
 
   handleLikeClick(post, postState, weight = 100) {

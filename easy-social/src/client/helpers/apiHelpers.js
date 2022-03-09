@@ -1,5 +1,5 @@
 import SteemAPI from '../steemAPI';
-import { jsonParse } from '../helpers/formatter';
+import { jsonParse } from './formatter';
 import * as accountHistoryConstants from '../../common/constants/accountHistory';
 
 /** *

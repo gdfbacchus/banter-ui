@@ -31,9 +31,16 @@ const editor = (state = defaultState, action) => {
       };
     case authActions.LOGIN_SUCCESS:
       if (action.meta && action.meta.refresh) return state;
+      let draftPosts = {};
+      if (action.payload.user_metadata && action.payload.user_metadata.drafts) {
+        draftPosts = action.payload.user_metadata.drafts
+      } else {
+        draftPosts = defaultState.draftPosts;
+      }
+
       return {
         ...state,
-        draftPosts: action.payload.user_metadata.drafts || defaultState.draftPosts,
+        draftPosts,
       };
     case editorActions.NEW_POST:
       return {

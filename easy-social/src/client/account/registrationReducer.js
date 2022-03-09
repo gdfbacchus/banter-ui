@@ -13,7 +13,8 @@ const initialState = {
   isAvailableAccount: false,
   isAvailablePassword: false,
   isProcessing: false,
-  regStatus: ''//empty '' or 'success' or 'error'
+  regStatus: '', //empty '' or 'success' or 'error',
+  registeredAccount: null,
 };
 
 
@@ -26,11 +27,12 @@ export default (state = initialState, action) => {
         isProcessing: true
       };
     case types.RGISTRATION_SUCCESS:
-      console.log("REGISTRATION SUCCESS");
+      console.log("[BANTER] REGISTRATION SUCCESS : ", action.payload);
       return {
         ...state,
         isProcessing: false,
-        regStatus: 'success'
+        regStatus: 'success',
+        registeredAccount: action.payload.registeredAccount
       };
     case types.RGISTRATION_ERROR:
       console.log("REGISTRATION ERROR");
