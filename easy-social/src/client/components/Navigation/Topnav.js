@@ -5,7 +5,12 @@ import { injectIntl, FormattedMessage } from 'react-intl';
 import { withRouter, Link } from 'react-router-dom';
 
 import { connect } from 'react-redux';
-import { Menu, Input, AutoComplete } from 'antd';
+import {
+  Menu,
+  Input,
+  AutoComplete,
+  Button
+} from 'antd';
 import classNames from 'classnames';
 import { searchAutoComplete } from '../../search/searchActions';
 import { getUpdatedSCUserMetadata } from '../../auth/authActions';
@@ -136,33 +141,16 @@ class Topnav extends React.Component {
           'Topnav__mobile-hidden': searchBarActive,
         })}
       >
-        <Menu className="Topnav__menu-container__menu" mode="horizontal">
-          <Menu.Item key="signup">
-            {/*<a target="_blank" rel="noopener noreferrer" href={process.env.SIGNUP_URL}>*/}
-              {/*<FormattedMessage id="signup" defaultMessage="Sign up" />*/}
-            {/*</a>*/}
-            <Link to="/registration" className="Topnav__link Topnav__link--action">
-              <FormattedMessage id="signup" defaultMessage="Sign up" />
-            </Link>
-
-          </Menu.Item>
-          <Menu.Item key="divider" disabled>
-            |
-          </Menu.Item>
-          <Menu.Item key="login">
-            {/*<a href={SteemConnect.getLoginURL(next)}>*/}
-              {/*<FormattedMessage id="login" defaultMessage="Log in" />*/}
-            {/*</a>*/}
-            <Link to="/login" className="Topnav__link Topnav__link--action">
-              <FormattedMessage id="login" defaultMessage="Log in" />
-            </Link>
-
-          </Menu.Item>
-          {/*TODO UNCOMMENT */}
-          {/*<Menu.Item key="language">*/}
-            {/*<LanguageSettings />*/}
-          {/*</Menu.Item>*/}
-        </Menu>
+        <Button className="banter-login ">
+          <Link to="/login" className="Topnav__link Topnav__link--action">
+            <FormattedMessage id="login" defaultMessage="Log in" />
+          </Link>
+        </Button>
+        <Button className="banter-signup">
+          <Link to="/registration" className="Topnav__link Topnav__link--action">
+            <FormattedMessage id="signup" defaultMessage="Sign up" />
+          </Link>
+        </Button>
       </div>
     );
   };
@@ -395,8 +383,9 @@ class Topnav extends React.Component {
               {/*busy*/}
             {/*</Link>*/}
             <Link className="Topnav__brand" to="/">
-              <img style={{width: '150px',marginLeft: '-8px'}} src="/images/logo4.png" alt="Banter"/>
+              <img style={{width: '100px',marginLeft: '10px'}} src="images/white-logo.png" alt="Banter"/>
             </Link>
+            &nbsp;
             <span className="Topnav__version">beta</span>
           </div>
           <div className="center">
@@ -449,6 +438,8 @@ class Topnav extends React.Component {
                 {/*})}*/}
               {/*/>*/}
             {/*</button>*/}
+
+
             {this.content()}
           </div>
         </div>
