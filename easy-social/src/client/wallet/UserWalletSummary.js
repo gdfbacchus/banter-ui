@@ -94,22 +94,22 @@ const UserWalletSummary = ({
         )}
       </div>
     </div>
-    <div className="UserWalletSummary__item">
-      <i className="iconfont icon-Dollar UserWalletSummary__icon" />
-      <div className="UserWalletSummary__label">
-        <FormattedMessage id="silver" defaultMessage="SILVER" />
-      </div>
-      <div className="UserWalletSummary__value">
-        {loading ? (
-          <Loading />
-        ) : (
-          <span>
-            <FormattedNumber value={parseFloat(user.sbd_balance)} />
-            {' SILVER'}
-          </span>
-        )}
-      </div>
-    </div>
+    {/*<div className="UserWalletSummary__item">*/}
+    {/*  <i className="iconfont icon-Dollar UserWalletSummary__icon" />*/}
+    {/*  <div className="UserWalletSummary__label">*/}
+    {/*    <FormattedMessage id="silver" defaultMessage="SILVER" />*/}
+    {/*  </div>*/}
+    {/*  <div className="UserWalletSummary__value">*/}
+    {/*    {loading ? (*/}
+    {/*      <Loading />*/}
+    {/*    ) : (*/}
+    {/*      <span>*/}
+    {/*        <FormattedNumber value={parseFloat(user.sbd_balance)} />*/}
+    {/*        {' SILVER'}*/}
+    {/*      </span>*/}
+    {/*    )}*/}
+    {/*  </div>*/}
+    {/*</div>*/}
     {/*<div className="UserWalletSummary__item">*/}
       {/*<i className="iconfont icon-savings UserWalletSummary__icon" />*/}
       {/*<div className="UserWalletSummary__label">*/}
