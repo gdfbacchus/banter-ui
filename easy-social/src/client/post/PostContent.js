@@ -24,6 +24,7 @@ import {
   getVotePercent,
   getRewriteLinks,
   getAppUrl,
+  getAuthenticatedUserWifs,
 } from '../reducers';
 import { editPost } from './Write/editorActions';
 import { votePost } from './postActions';
@@ -53,6 +54,7 @@ import DMCARemovedMessage from '../components/Story/DMCARemovedMessage';
     defaultVotePercent: getVotePercent(state),
     appUrl: getAppUrl(state),
     rewriteLinks: getRewriteLinks(state),
+    authenticatedUserWifs: getAuthenticatedUserWifs(state),
   }),
   {
     editPost,
@@ -90,6 +92,7 @@ class PostContent extends React.Component {
     followUser: PropTypes.func,
     unfollowUser: PropTypes.func,
     push: PropTypes.func,
+    authenticatedUserWifs: PropTypes.shape().isRequired,
   };
 
   static defaultProps = {
@@ -127,17 +130,13 @@ class PostContent extends React.Component {
   }
 
   getPostingWif() {
-    // const posting_pubk = this.props.user.posting.key_auths[0][0];
-    // //console.log("LIKE POST PUBLIC POSTING KEY: ",posting_pubk)
-    // const private_posting_key = WalletDb.getPrivateKey(posting_pubk);
-    // const wifP = private_posting_key.toWif();
-    // //console.log("LIKE POST PRIVATE POSTING KEY wifP : ", wifP);
-    // return wifP
+    return this.props.authenticatedUserWifs.postingWif;
   }
 
   handleLikeClick = (post, postState, weight = 100) => {
     const { sliderMode, user, defaultVotePercent } = this.props;
     const wifP = this.getPostingWif();
+    console.log('[BANTER] PostContent.js handleLikeClick wifP: ', wifP);
     //console.log("LIKE POST handleLikeClick wifP : ", wifP);
     if (sliderMode === 'on' || (sliderMode === 'auto' && getHasDefaultSlider(user))) {
       this.props.votePost(post.id, post.author, post.permlink, weight, wifP);

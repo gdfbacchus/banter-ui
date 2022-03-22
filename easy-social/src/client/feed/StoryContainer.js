@@ -17,6 +17,7 @@ import {
   getRewardFund,
   getVotePercent,
   getShowNSFWPosts,
+  getAuthenticatedUserWifs,
 } from '../reducers';
 import { votePost } from '../post/postActions';
 import { toggleBookmark } from '../bookmarks/bookmarksActions';
@@ -46,6 +47,9 @@ const mapStateToProps = (state, { id }) => {
   const pendingFlag =
     pendingVote && (pendingVote.weight < 0 || (pendingVote.weight === 0 && postState.isReported));
 
+  const authenticatedUserWifs = getAuthenticatedUserWifs(state);
+  console.log('[BANTER] StoryContainer.js authenticatedUserWifs: ', authenticatedUserWifs);
+
   return {
     user,
     post,
@@ -60,6 +64,7 @@ const mapStateToProps = (state, { id }) => {
     rewardFund: getRewardFund(state),
     defaultVotePercent: getVotePercent(state),
     showNSFWPosts: getShowNSFWPosts(state),
+    authenticatedUserWifs,
   };
 };
 

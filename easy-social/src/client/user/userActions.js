@@ -16,6 +16,7 @@ export const FOLLOW_USER_SUCCESS = '@user/FOLLOW_USER_SUCCESS';
 export const FOLLOW_USER_ERROR = '@user/FOLLOW_USER_ERROR';
 
 export const followUser = username => (dispatch, getState, { dsteemClient }) => {
+
   const state = getState();
 
 
