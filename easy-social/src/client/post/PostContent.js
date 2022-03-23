@@ -136,8 +136,7 @@ class PostContent extends React.Component {
   handleLikeClick = (post, postState, weight = 100) => {
     const { sliderMode, user, defaultVotePercent } = this.props;
     const wifP = this.getPostingWif();
-    console.log('[BANTER] PostContent.js handleLikeClick wifP: ', wifP);
-    //console.log("LIKE POST handleLikeClick wifP : ", wifP);
+
     if (sliderMode === 'on' || (sliderMode === 'auto' && getHasDefaultSlider(user))) {
       this.props.votePost(post.id, post.author, post.permlink, weight, wifP);
     } else if (postState.isLiked) {
@@ -149,12 +148,13 @@ class PostContent extends React.Component {
 
   handleReportClick(post, postState) {
     const wifP = this.getPostingWif();
-    console.log("LIKE POST handleReportClick wifP : ", wifP);
     const weight = postState.isReported ? 0 : -10000;
     this.props.votePost(post.id, post.author, post.permlink, weight, wifP);
   }
 
-  handleShareClick = post => this.props.reblog(post.id);
+  handleShareClick = (post) => {
+    this.props.reblog(post.id);
+  }
 
   handleSaveClick = post => this.props.toggleBookmark(post.id, post.author, post.permlink);
 

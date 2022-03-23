@@ -48,7 +48,6 @@ const mapStateToProps = (state, { id }) => {
     pendingVote && (pendingVote.weight < 0 || (pendingVote.weight === 0 && postState.isReported));
 
   const authenticatedUserWifs = getAuthenticatedUserWifs(state);
-  console.log('[BANTER] StoryContainer.js authenticatedUserWifs: ', authenticatedUserWifs);
 
   return {
     user,

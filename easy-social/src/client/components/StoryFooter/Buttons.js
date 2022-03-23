@@ -349,8 +349,8 @@ export default class Buttons extends React.Component {
         {showReblogLink && (
           <BTooltip
             title={intl.formatMessage({
-              id: postState.reblogged ? 'already_show' : 'show',
-              defaultMessage: postState.reblogged ? 'Already shown' : 'Show',
+              id: postState.reblogged ? 'already_share' : 'share',
+              defaultMessage: postState.reblogged ? 'Already share' : 'Share',
             })}
           >
             <a role="presentation" className={rebloggedClass} onClick={this.handleShareClick}>

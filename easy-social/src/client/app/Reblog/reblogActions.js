@@ -34,13 +34,9 @@ export const reblog = postId => (dispatch, getState, { dsteemClient }) => {
     }])
   };
 
-  const postingWif = getPostingWif(auth.user.posting.key_auths[0][0]);
+  const postingWif = auth.postingWif;
   const operations = [['custom_json', params]];
-  //console.log("reblog postingWif: ",postingWif);
   const privKey2 = dsteem.PrivateKey.from(postingWif);//That's Working
-  //console.log("reblog privKey2 PrivateKey.from: ",privKey2);
-  console.log("reblog Operations before send: ",operations);
-
 
   dispatch({
     type: REBLOG_POST,
@@ -63,11 +59,7 @@ export const reblog = postId => (dispatch, getState, { dsteemClient }) => {
     meta: { postId },
   });
 };
-const getPostingWif = (posting_pubk)=> {
-  // const private_posting_key = WalletDb.getPrivateKey(posting_pubk);
-  // const wifP = private_posting_key.toWif();
-  // return wifP
-};
+
 export const getRebloggedList = () => dispatch => {
   const list = store.get('reblogged') || [];
   dispatch(getRebloggedListAction(list));

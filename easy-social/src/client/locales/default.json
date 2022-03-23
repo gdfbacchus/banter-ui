@@ -101,8 +101,11 @@
   "notify_comment_sent": "Comment submitted",
   "notify_comment_updated": "Comment updated",
   "reblog": "Reblog",
+  "share": "Share",
+  "already_share": "Already share",
   "show": "Show",
   "already_show": "Already shown",
+
   "reblog_reblogged": "You already reblogged this post",
   "reblog_modal_title": "Reblog this post?",
   "reblog_modal_content": "This post will appear on your personal feed. This action cannot be reversed.",
