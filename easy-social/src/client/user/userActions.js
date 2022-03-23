@@ -91,7 +91,8 @@ export const unfollowUser = username => (dispatch, getState, { dsteemClient }) =
    };
 
 
-  const postingWif = getPostingWif(state.auth.user.posting.key_auths[0][0]);
+  // const postingWif = getPostingWif(state.auth.user.posting.key_auths[0][0]);
+  const postingWif = state.auth.postingWif;
   const operations = [['custom_json', params]];
   //console.log("unfollowUser postingWif: ",postingWif);
   const privKey2 = dsteem.PrivateKey.from(postingWif);//That's Working
