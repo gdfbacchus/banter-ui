@@ -77,7 +77,7 @@ export default class Post extends React.Component {
   }
 
   state = {
-    commentsVisible: false,
+    commentsVisible: true,
     showHiddenPost: false,
   };
 
@@ -181,7 +181,7 @@ export default class Post extends React.Component {
             {showPost ? (
               <div className="center" style={{ paddingBottom: '24px' }}>
                 <PostContent content={content} signature={signature} />
-                <VisibilitySensor onChange={this.handleCommentsVisibility} />
+                {/*<VisibilitySensor onChange={this.handleCommentsVisibility} />*/}
                 {!isBannedPost(content) && (
                   <div id="comments">
                     <Comments show={this.state.commentsVisible} post={content} />
