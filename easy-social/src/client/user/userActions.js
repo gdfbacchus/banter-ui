@@ -32,7 +32,8 @@ export const followUser = username => (dispatch, getState, { dsteemClient }) => 
     json: JSON.stringify(['follow', { follower, following: username, what: ['blog'] }])
   };
 
-  const postingWif = getPostingWif(state.auth.user.posting.key_auths[0][0]);
+  // const postingWif = getPostingWif(state.auth.user.posting.key_auths[0][0]);
+  const postingWif = state.auth.postingWif;
   const operations = [['custom_json', params]];
   //console.log("followUser postingWif: ",postingWif);
   const privKey2 = dsteem.PrivateKey.from(postingWif);//That's Working
