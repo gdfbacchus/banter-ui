@@ -16,6 +16,7 @@ import { showPostModal } from '../app/appActions';
 import EmptyUserProfile from '../statics/EmptyUserProfile';
 import EmptyUserOwnProfile from '../statics/EmptyUserOwnProfile';
 import PostModal from '../post/PostModalContainer';
+import {getFollowing} from "./userActions";
 
 @withRouter
 @connect(
@@ -28,6 +29,7 @@ import PostModal from '../post/PostModalContainer';
     getFeedContent,
     getMoreFeedContent,
     showPostModal,
+    getFollowing
   },
 )
 export default class UserProfile extends React.Component {
@@ -40,6 +42,7 @@ export default class UserProfile extends React.Component {
     limit: PropTypes.number,
     getFeedContent: PropTypes.func,
     getMoreFeedContent: PropTypes.func,
+    getFollowing: PropTypes.func.isRequired,
   };
 
   static defaultProps = {
@@ -50,7 +53,7 @@ export default class UserProfile extends React.Component {
   };
 
   componentDidMount() {
-    const { match, limit } = this.props;
+    const { match, limit, authenticated, authenticatedUser } = this.props;
     const { name } = match.params;
 
     this.props.getFeedContent({
@@ -58,6 +61,11 @@ export default class UserProfile extends React.Component {
       category: name,
       limit,
     });
+    const isOwnProfile = authenticated && name === authenticatedUser.name;
+    if (!isOwnProfile) {
+      this.props.getFollowing(authenticatedUser.name);
+    }
+
   }
 
   render() {
