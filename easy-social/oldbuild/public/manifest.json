@@ -1,11 +1,11 @@
 {
-  "name": "EasySocial",
-  "short_name": "EasySocial",
-  "description": "EasySocial is a decentralized social network based on EasySocial blockchain",
+  "name": "Banter",
+  "short_name": "Banter",
+  "description": "Banter is a decentralized social network based on Banter blockchain",
   "theme_color": "#4757b2",
   "background_color": "#fcfcff",
   "display": "standalone",
-  "Scope": "/",
+  "Scope": "/",F
   "start_url": "/",
   "icons": [
     {

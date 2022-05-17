@@ -41,7 +41,7 @@ class PostModal extends React.Component {
 
     const previousURL = window ? window.location.href : '';
     this.state = {
-      commentsVisible: false,
+      commentsVisible: true,
       previousURL,
     };
 
@@ -137,7 +137,7 @@ class PostModal extends React.Component {
           </a>
         </div>
         <PostContent content={shownPostContents} signature={signature} />
-        <VisibilitySensor onChange={this.handleCommentsVisibility} />
+        {/*<VisibilitySensor onChange={this.handleCommentsVisibility} />*/}
         {!isBannedPost(shownPostContents) && (
           <div id="comments">
             <Comments show={this.state.commentsVisible} post={shownPostContents} />

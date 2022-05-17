@@ -184,7 +184,7 @@ export default class ProfileSettings extends React.Component {
       <div className="shifted">
         <Helmet>
           <title>
-            {intl.formatMessage({ id: 'edit_profile', defaultMessage: 'Edit profile' })} - EasySocial
+            {intl.formatMessage({ id: 'edit_profile', defaultMessage: 'Edit profile' })} - Banter
           </title>
         </Helmet>
         <div className="settings-layout container">

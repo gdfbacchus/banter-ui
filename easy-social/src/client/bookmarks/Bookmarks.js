@@ -75,7 +75,7 @@ export default class Bookmarks extends React.Component {
       <div className="shifted">
         <Helmet>
           <title>
-            {intl.formatMessage({ id: 'bookmarks', defaultMessage: 'Bookmarks' })} - EasySocial
+            {intl.formatMessage({ id: 'bookmarks', defaultMessage: 'Bookmarks' })} - Banter
           </title>
         </Helmet>
         <div className="feed-layout container">

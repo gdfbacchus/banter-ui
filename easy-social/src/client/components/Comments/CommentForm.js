@@ -71,7 +71,7 @@ class CommentForm extends React.Component {
 
   componentWillUnmount() {
     this._isMounted_ = false;
-    this.props.postCommentResetStatus();
+    // this.props.postCommentResetStatus();
   }
 
   setInput(input) {

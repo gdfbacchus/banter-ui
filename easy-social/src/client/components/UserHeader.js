@@ -54,6 +54,7 @@ const UserHeader = ({
 
                   <FollowButton username={handle} />
                 }
+
               </div>
               {!isSameUser && (
                 <div

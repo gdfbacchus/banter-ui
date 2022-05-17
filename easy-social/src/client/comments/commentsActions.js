@@ -121,7 +121,8 @@ export const sendComment = (parentPost, body, isUpdating = false, originalCommen
     body: newBody,
     json_metadata: JSON.stringify(jsonMetadata)
   };
-  const postingWif = getPostingWif(auth.user.posting.key_auths[0][0]);
+  // const postingWif = getPostingWif(auth.user.posting.key_auths[0][0]);
+  const postingWif = auth.postingWif;
   const operations = [['comment', params]];
   //console.log("sendComment postingWif: ",postingWif);
   const privKey2 = dsteem.PrivateKey.from(postingWif);//That's Working
@@ -209,7 +210,8 @@ export const likeComment = (commentId, weight = 10000, vote = 'like', retryCount
   };
 
   const operations = [['vote', params]];
-  const postingWif = getPostingWif(auth.user.posting.key_auths[0][0]);
+  // const postingWif = getPostingWif(auth.user.posting.key_auths[0][0]);
+  const postingWif = auth.postingWif;
 
   //console.log("sendComment postingWif: ",postingWif);
   const privKey2 = dsteem.PrivateKey.from(postingWif);//That's Working

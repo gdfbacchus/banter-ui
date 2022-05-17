@@ -300,7 +300,7 @@ export default class RegistrationPage extends React.Component {
       <div className="shifted">
         <div className="settings-layout container">
           <div className="center">
-            <h1>
+            <h1 className={"banter-light"}>
               Register new account
             </h1>
 

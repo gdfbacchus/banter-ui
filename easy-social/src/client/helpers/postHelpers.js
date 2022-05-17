@@ -69,8 +69,8 @@ export function getContentImages(content, parsed = false) {
 
 export function createPostMetadata(body, tags, oldMetadata = {}) {
   let metaData = {
-    community: 'EasySocial',
-    app: `EasySocial`,
+    community: 'Banter',
+    app: `Banter`,
     format: 'markdown',
   };
 

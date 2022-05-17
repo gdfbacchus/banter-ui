@@ -115,7 +115,7 @@ class Comment extends React.Component {
 
   componentWillUnmount() {
     this._isMounted_ = false;
-    this.props.postCommentResetStatus();
+    // this.props.postCommentResetStatus();
   }
 
   setSelf = c => {

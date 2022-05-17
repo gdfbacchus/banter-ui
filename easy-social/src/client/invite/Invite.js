@@ -68,7 +68,7 @@ export default class Invite extends React.Component {
     return (
       <div className="shifted">
         <Helmet>
-          <title>{intl.formatMessage({ id: 'invite', defaultMessage: 'Invite' })} - EasySocial</title>
+          <title>{intl.formatMessage({ id: 'invite', defaultMessage: 'Invite' })} - Banter</title>
         </Helmet>
         <div className="settings-layout container">
           <Affix className="leftContainer" stickPosition={77}>
@@ -80,12 +80,12 @@ export default class Invite extends React.Component {
             <div className="Invite">
               <div className="Invite__icon-container" />
               <h1 className="Invite__title">
-                <FormattedMessage id="invite_title" defaultMessage="Don't use EasySocial alone!" />
+                <FormattedMessage id="invite_title" defaultMessage="Don't use Banter alone!" />
               </h1>
               <p className="Invite__description">
                 <FormattedMessage
                   id="invite_info"
-                  defaultMessage="Onboard new users on EasySocial today using the link below and get 10% of their rewards for 30 days."
+                  defaultMessage="Onboard new users on Banter today using the link below and get 10% of their rewards for 30 days."
                 />
               </p>
               <div className="Invite__input-container">
@@ -103,7 +103,7 @@ export default class Invite extends React.Component {
                   text={intl.formatMessage(
                     {
                       id: 'invite_share',
-                      defaultMessage: 'Join me today on EasySocial and get rewarded to blog {link}',
+                      defaultMessage: 'Join me today on Banter and get rewarded to blog {link}',
                     },
                     {
                       link: '',
@@ -115,7 +115,7 @@ export default class Invite extends React.Component {
                   text={intl.formatMessage(
                     {
                       id: 'invite_share',
-                      defaultMessage: 'Join me today on EasySocial and get rewarded to blog {link}',
+                      defaultMessage: 'Join me today on Banter and get rewarded to blog {link}',
                     },
                     {
                       link: this.state.inviteURL,

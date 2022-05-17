@@ -64,6 +64,7 @@ class Story extends React.Component {
     followUser: PropTypes.func,
     unfollowUser: PropTypes.func,
     push: PropTypes.func,
+    authenticatedUserWifs: PropTypes.shape().isRequired,
   };
 
   static defaultProps = {
@@ -166,11 +167,13 @@ class Story extends React.Component {
     // const wifP = private_posting_key.toWif();
     // //console.log("STORY LIKE POST PRIVATE POSTING KEY wifP : ", wifP);
     // return wifP
+    return this.props.authenticatedUserWifs.postingWif;
   }
 
   handleLikeClick(post, postState, weight = 100) {
     const { sliderMode, user, defaultVotePercent } = this.props;
     const wifP = this.getPostingWif();
+    console.log('[BANTER] Story.js handleLikeClick wifP: ', wifP);
     // console.log("STORY LIKE POST handleLikeClick wifP : ", wifP);
 
     if (sliderMode === 'on' || (sliderMode === 'auto' && getHasDefaultSlider(user))) {

@@ -251,7 +251,7 @@ export default class LoginPage extends React.Component {
         <div className="shifted">
           <div className="settings-layout container">
             <div className="center">
-              <h1>
+              <h1 className={"banter-light"}>
                 Login
               </h1>
 
@@ -260,7 +260,7 @@ export default class LoginPage extends React.Component {
                   <div className="Invite__input-container">
                     <Form.Item
                       label={
-                        <span className="Editor__label">
+                        <span className="Editor__label banter-light">
                         Account name
                       </span>
                       }
@@ -276,7 +276,7 @@ export default class LoginPage extends React.Component {
 
                     <Form.Item
                       label={
-                        <span className="Editor__label">
+                        <span className="Editor__label banter-light">
                         Password
                       </span>
                       }
@@ -294,7 +294,7 @@ export default class LoginPage extends React.Component {
                   <button
                     onClick={this.handleSubmit}
                     disabled={disabled}
-                    className={`CommentForm__button ${buttonClass}`}
+                    className={`CommentForm__button ${buttonClass} `}
                   >
                     Login
                   </button>

@@ -4,7 +4,7 @@ module.exports = {
     NAME: "easy-social"
   },
   LOG_ACTION_CONTEXT : {
-    CREATE_ES_ACCOUNT: "Create EasySocial Account"
+    CREATE_ES_ACCOUNT: "Create Banter Account"
   },
   ZERORPC: {
     RECONN_ATTEMPTS: 10,

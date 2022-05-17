@@ -89,6 +89,7 @@ export default class Buttons extends React.Component {
   }
 
   handleLikeClick() {
+    console.log('[BANTER] Buttons.js handleLikeClick');
     this.props.onActionInitiated(this.props.onLikeClick);
   }
 
@@ -304,14 +305,15 @@ export default class Buttons extends React.Component {
             {pendingLike ? (
               <Icon type="loading" />
             ) : (
-              <i
-                // className={`iconfont icon-${this.state.sliderVisible ? 'right' : 'praise_fill'}`}
-                className={`anticon iconfont anticon-heart`}
-
-              />
+                <i
+                  // className={`iconfont icon-${this.state.sliderVisible ? 'right' : 'praise_fill'}`}
+                  // className={`iconfont anticon-heart`}
+                  className={`iconfont icon-praise_fill`}
+                />
             )}
           </a>
         </BTooltip>
+        &nbsp;
         {post.active_votes.length > 0 && (
           <span
             className="Buttons__number Buttons__reactions-count"
@@ -335,6 +337,7 @@ export default class Buttons extends React.Component {
             </BTooltip>
           </span>
         )}
+        {/* Comment */}
         <BTooltip title={intl.formatMessage({ id: 'comment', defaultMessage: 'Comment' })}>
           <Link className="Buttons__link" to={commentsLink} onClick={this.handleCommentClick}>
             <i className="iconfont icon-message_fill" />
@@ -346,8 +349,8 @@ export default class Buttons extends React.Component {
         {showReblogLink && (
           <BTooltip
             title={intl.formatMessage({
-              id: postState.reblogged ? 'already_show' : 'show',
-              defaultMessage: postState.reblogged ? 'Already shown' : 'Show',
+              id: postState.reblogged ? 'already_share' : 'share',
+              defaultMessage: postState.reblogged ? 'Already share' : 'Share',
             })}
           >
             <a role="presentation" className={rebloggedClass} onClick={this.handleShareClick}>

@@ -72,6 +72,7 @@ class StoryFooter extends React.Component {
   }
 
   handleLikeClick = () => {
+    console.log('[BANTER] StoryFooter.js handleLikeClick');
     const { sliderMode, user } = this.props;
     if (sliderMode === 'on' || (sliderMode === 'auto' && getHasDefaultSlider(user))) {
       if (!this.state.sliderVisible) {

@@ -75,6 +75,8 @@ export const votePost = (postId, author, permlink, weight = 10000, postingWif) =
     return null;
   }
 
+  console.log('[BANTER] votePost postingWif: ', postingWif)
+
   const post = posts.list[postId];
   const voter = auth.user.name;
 

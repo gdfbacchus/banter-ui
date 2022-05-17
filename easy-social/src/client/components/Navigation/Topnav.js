@@ -5,7 +5,12 @@ import { injectIntl, FormattedMessage } from 'react-intl';
 import { withRouter, Link } from 'react-router-dom';
 
 import { connect } from 'react-redux';
-import { Menu, Input, AutoComplete } from 'antd';
+import {
+  Menu,
+  Input,
+  AutoComplete,
+  Button
+} from 'antd';
 import classNames from 'classnames';
 import { searchAutoComplete } from '../../search/searchActions';
 import { getUpdatedSCUserMetadata } from '../../auth/authActions';
@@ -136,33 +141,16 @@ class Topnav extends React.Component {
           'Topnav__mobile-hidden': searchBarActive,
         })}
       >
-        <Menu className="Topnav__menu-container__menu" mode="horizontal">
-          <Menu.Item key="signup">
-            {/*<a target="_blank" rel="noopener noreferrer" href={process.env.SIGNUP_URL}>*/}
-              {/*<FormattedMessage id="signup" defaultMessage="Sign up" />*/}
-            {/*</a>*/}
-            <Link to="/registration" className="Topnav__link Topnav__link--action">
-              <FormattedMessage id="signup" defaultMessage="Sign up" />
-            </Link>
-
-          </Menu.Item>
-          <Menu.Item key="divider" disabled>
-            |
-          </Menu.Item>
-          <Menu.Item key="login">
-            {/*<a href={SteemConnect.getLoginURL(next)}>*/}
-              {/*<FormattedMessage id="login" defaultMessage="Log in" />*/}
-            {/*</a>*/}
-            <Link to="/login" className="Topnav__link Topnav__link--action">
-              <FormattedMessage id="login" defaultMessage="Log in" />
-            </Link>
-
-          </Menu.Item>
-          {/*TODO UNCOMMENT */}
-          {/*<Menu.Item key="language">*/}
-            {/*<LanguageSettings />*/}
-          {/*</Menu.Item>*/}
-        </Menu>
+        <Button className="banter-login ">
+          <Link to="/login" className="Topnav__link Topnav__link--action">
+            <FormattedMessage id="login" defaultMessage="Log in" />
+          </Link>
+        </Button>
+        <Button className="banter-signup">
+          <Link to="/registration" className="Topnav__link Topnav__link--action">
+            <FormattedMessage id="signup" defaultMessage="Sign up" />
+          </Link>
+        </Button>
       </div>
     );
   };
@@ -208,106 +196,192 @@ class Topnav extends React.Component {
           'Topnav__mobile-hidden': searchBarActive,
         })}
       >
-        <Menu selectedKeys={[]} className="Topnav__menu-container__menu" mode="horizontal">
-          <Menu.Item key="write">
-            <BTooltip
-              placement="bottom"
-              title={intl.formatMessage({ id: 'write_post', defaultMessage: 'Write post' })}
-              mouseEnterDelay={1}
-            >
-              <Link to="/editor" className="Topnav__link Topnav__link--action">
-                <i className="iconfont icon-write" />
-              </Link>
-            </BTooltip>
-          </Menu.Item>
-          <Menu.Item key="notifications" className="Topnav__item--badge">
-            <BTooltip
-              placement="bottom"
-              title={intl.formatMessage({ id: 'notifications', defaultMessage: 'Notifications' })}
-              overlayClassName="Topnav__notifications-tooltip"
-              mouseEnterDelay={1}
-            >
-              <Popover
-                placement="bottomRight"
-                trigger="click"
-                content={
-                  <Notifications
-                    notifications={notifications}
-                    onNotificationClick={this.handleCloseNotificationsPopover}
-                    currentAuthUsername={username}
-                    lastSeenTimestamp={lastSeenTimestamp}
-                    loadingNotifications={loadingNotifications}
-                    getUpdatedSCUserMetadata={this.props.getUpdatedSCUserMetadata}
-                  />
-                }
-                visible={notificationsPopoverVisible}
-                onVisibleChange={this.handleNotificationsPopoverVisibleChange}
-                overlayClassName="Notifications__popover-overlay"
-                title={intl.formatMessage({ id: 'notifications', defaultMessage: 'Notifications' })}
-              >
-                <a className="Topnav__link Topnav__link--light Topnav__link--action">
-                  {displayBadge ? (
-                    <div className="Topnav__notifications-count">{notificationsCountDisplay}</div>
-                  ) : (
-                    <i className="iconfont icon-remind" />
-                  )}
-                </a>
-              </Popover>
-            </BTooltip>
-          </Menu.Item>
-          <Menu.Item key="user" className="Topnav__item-user">
-            <Link className="Topnav__user" to={`/@${username}`} onClick={Topnav.handleScrollToTop}>
-              <Avatar username={username} size={36} profileImage={profileImage}  />
-            </Link>
-          </Menu.Item>
-          <Menu.Item key="more" className="Topnav__menu--icon">
-            <Popover
-              placement="bottom"
-              trigger="click"
-              visible={popoverVisible}
-              onVisibleChange={this.handleMoreMenuVisibleChange}
-              overlayStyle={{ position: 'fixed' }}
-              content={
-                <PopoverMenu onSelect={this.handleMoreMenuSelect}>
-                  <PopoverMenuItem key="my-profile" fullScreenHidden>
-                    <FormattedMessage id="my_profile" defaultMessage="My profile" />
-                  </PopoverMenuItem>
-                  <PopoverMenuItem key="feed" fullScreenHidden>
-                    <FormattedMessage id="feed" defaultMessage="Feed" />
-                  </PopoverMenuItem>
-                  <PopoverMenuItem key="news" fullScreenHidden>
-                    <FormattedMessage id="news" defaultMessage="News" />
-                  </PopoverMenuItem>
-                  <PopoverMenuItem key="replies" fullScreenHidden>
-                    <FormattedMessage id="replies" defaultMessage="Replies" />
-                  </PopoverMenuItem>
-                  <PopoverMenuItem key="wallet" fullScreenHidden>
-                    <FormattedMessage id="wallet" defaultMessage="Wallet" />
-                  </PopoverMenuItem>
-                  <PopoverMenuItem key="activity">
-                    <FormattedMessage id="activity" defaultMessage="Activity" />
-                  </PopoverMenuItem>
-                  <PopoverMenuItem key="bookmarks">
-                    <FormattedMessage id="bookmarks" defaultMessage="Bookmarks" />
-                  </PopoverMenuItem>
-                  <PopoverMenuItem key="drafts">
-                    <FormattedMessage id="drafts" defaultMessage="Drafts" />
-                  </PopoverMenuItem>
-                  <PopoverMenuItem key="settings">
-                    <FormattedMessage id="settings" defaultMessage="Settings" />
-                  </PopoverMenuItem>
-                  <PopoverMenuItem key="logout">
-                    <FormattedMessage id="logout" defaultMessage="Logout" />
-                  </PopoverMenuItem>
-                </PopoverMenu>
-              }
-            >
-              <a className="Topnav__link Topnav__link--light">
-                <i className="iconfont icon-caretbottom" />
-              </a>
-            </Popover>
-          </Menu.Item>
-        </Menu>
+        <Link to="/editor" className="Topnav__link Topnav__link--action" title={"Write post"}>
+          {/*<i className="iconfont icon-write" /> */}
+          Write post
+        </Link>
+        &nbsp; | &nbsp;
+        {/*<Popover*/}
+        {/*  placement="bottomRight"*/}
+        {/*  trigger="click"*/}
+        {/*  content={*/}
+        {/*    <Notifications*/}
+        {/*      notifications={notifications}*/}
+        {/*      onNotificationClick={this.handleCloseNotificationsPopover}*/}
+        {/*      currentAuthUsername={username}*/}
+        {/*      lastSeenTimestamp={lastSeenTimestamp}*/}
+        {/*      loadingNotifications={loadingNotifications}*/}
+        {/*      getUpdatedSCUserMetadata={this.props.getUpdatedSCUserMetadata}*/}
+        {/*    />*/}
+        {/*  }*/}
+        {/*  visible={notificationsPopoverVisible}*/}
+        {/*  onVisibleChange={this.handleNotificationsPopoverVisibleChange}*/}
+        {/*  overlayClassName="Notifications__popover-overlay"*/}
+        {/*  title={intl.formatMessage({ id: 'notifications', defaultMessage: 'Notifications' })}*/}
+        {/*>*/}
+        {/*  <a className="Topnav__link Topnav__link--light Topnav__link--action">*/}
+        {/*    {displayBadge ? (*/}
+        {/*      <div className="Topnav__notifications-count">{notificationsCountDisplay}</div>*/}
+        {/*    ) : (*/}
+        {/*      <i className="iconfont icon-remind" />*/}
+        {/*    )}*/}
+        {/*  </a>*/}
+        {/*</Popover>*/}
+        <Link className="Topnav__user" to={`/@${username}`} onClick={Topnav.handleScrollToTop}>
+          {/*<Avatar username={username} size={36} profileImage={profileImage}  />*/}
+          My profile
+        </Link>
+        &nbsp; | &nbsp;
+        <div >
+          <Popover
+            placement="bottom"
+            trigger="click"
+            visible={popoverVisible}
+            onVisibleChange={this.handleMoreMenuVisibleChange}
+            overlayStyle={{ position: 'fixed' }}
+            content={
+              <PopoverMenu onSelect={this.handleMoreMenuSelect}>
+                <PopoverMenuItem key="my-profile" fullScreenHidden>
+                  <FormattedMessage id="my_profile" defaultMessage="My profile" />
+                </PopoverMenuItem>
+                <PopoverMenuItem key="feed" fullScreenHidden>
+                  <FormattedMessage id="feed" defaultMessage="Feed" />
+                </PopoverMenuItem>
+                <PopoverMenuItem key="news" fullScreenHidden>
+                  <FormattedMessage id="news" defaultMessage="News" />
+                </PopoverMenuItem>
+                <PopoverMenuItem key="replies" fullScreenHidden>
+                  <FormattedMessage id="replies" defaultMessage="Replies" />
+                </PopoverMenuItem>
+                <PopoverMenuItem key="wallet" fullScreenHidden>
+                  <FormattedMessage id="wallet" defaultMessage="Wallet" />
+                </PopoverMenuItem>
+                <PopoverMenuItem key="activity">
+                  <FormattedMessage id="activity" defaultMessage="Activity" />
+                </PopoverMenuItem>
+                <PopoverMenuItem key="bookmarks">
+                  <FormattedMessage id="bookmarks" defaultMessage="Bookmarks" />
+                </PopoverMenuItem>
+                <PopoverMenuItem key="drafts">
+                  <FormattedMessage id="drafts" defaultMessage="Drafts" />
+                </PopoverMenuItem>
+                <PopoverMenuItem key="settings">
+                  <FormattedMessage id="settings" defaultMessage="Settings" />
+                </PopoverMenuItem>
+                <PopoverMenuItem key="logout">
+                  <FormattedMessage id="logout" defaultMessage="Logout" />
+                </PopoverMenuItem>
+              </PopoverMenu>
+            }
+          >
+            <a className="Topnav__link Topnav__link--light">
+              Actions <i className="iconfont icon-caretbottom" />
+            </a>
+          </Popover>
+        </div>
+
+
+
+        {/*<Menu selectedKeys={[]} className="Topnav__menu-container__menu" mode="horizontal">*/}
+        {/*  <Menu.Item key="write">*/}
+        {/*    <BTooltip*/}
+        {/*      placement="bottom"*/}
+        {/*      title={intl.formatMessage({ id: 'write_post', defaultMessage: 'Write post' })}*/}
+        {/*      mouseEnterDelay={1}*/}
+        {/*    >*/}
+        {/*      <Link to="/editor" className="Topnav__link Topnav__link--action">*/}
+        {/*        <i className="iconfont icon-write" />*/}
+        {/*      </Link>*/}
+        {/*    </BTooltip>*/}
+        {/*  </Menu.Item>*/}
+        {/*  <Menu.Item key="notifications" className="Topnav__item--badge">*/}
+        {/*    <BTooltip*/}
+        {/*      placement="bottom"*/}
+        {/*      title={intl.formatMessage({ id: 'notifications', defaultMessage: 'Notifications' })}*/}
+        {/*      overlayClassName="Topnav__notifications-tooltip"*/}
+        {/*      mouseEnterDelay={1}*/}
+        {/*    >*/}
+        {/*      <Popover*/}
+        {/*        placement="bottomRight"*/}
+        {/*        trigger="click"*/}
+        {/*        content={*/}
+        {/*          <Notifications*/}
+        {/*            notifications={notifications}*/}
+        {/*            onNotificationClick={this.handleCloseNotificationsPopover}*/}
+        {/*            currentAuthUsername={username}*/}
+        {/*            lastSeenTimestamp={lastSeenTimestamp}*/}
+        {/*            loadingNotifications={loadingNotifications}*/}
+        {/*            getUpdatedSCUserMetadata={this.props.getUpdatedSCUserMetadata}*/}
+        {/*          />*/}
+        {/*        }*/}
+        {/*        visible={notificationsPopoverVisible}*/}
+        {/*        onVisibleChange={this.handleNotificationsPopoverVisibleChange}*/}
+        {/*        overlayClassName="Notifications__popover-overlay"*/}
+        {/*        title={intl.formatMessage({ id: 'notifications', defaultMessage: 'Notifications' })}*/}
+        {/*      >*/}
+        {/*        <a className="Topnav__link Topnav__link--light Topnav__link--action">*/}
+        {/*          {displayBadge ? (*/}
+        {/*            <div className="Topnav__notifications-count">{notificationsCountDisplay}</div>*/}
+        {/*          ) : (*/}
+        {/*            <i className="iconfont icon-remind" />*/}
+        {/*          )}*/}
+        {/*        </a>*/}
+        {/*      </Popover>*/}
+        {/*    </BTooltip>*/}
+        {/*  </Menu.Item>*/}
+        {/*  <Menu.Item key="user" className="Topnav__item-user">*/}
+        {/*    <Link className="Topnav__user" to={`/@${username}`} onClick={Topnav.handleScrollToTop}>*/}
+        {/*      <Avatar username={username} size={36} profileImage={profileImage}  />*/}
+        {/*    </Link>*/}
+        {/*  </Menu.Item>*/}
+        {/*  <Menu.Item key="more" className="Topnav__menu--icon">*/}
+        {/*    <Popover*/}
+        {/*      placement="bottom"*/}
+        {/*      trigger="click"*/}
+        {/*      visible={popoverVisible}*/}
+        {/*      onVisibleChange={this.handleMoreMenuVisibleChange}*/}
+        {/*      overlayStyle={{ position: 'fixed' }}*/}
+        {/*      content={*/}
+        {/*        <PopoverMenu onSelect={this.handleMoreMenuSelect}>*/}
+        {/*          <PopoverMenuItem key="my-profile" fullScreenHidden>*/}
+        {/*            <FormattedMessage id="my_profile" defaultMessage="My profile" />*/}
+        {/*          </PopoverMenuItem>*/}
+        {/*          <PopoverMenuItem key="feed" fullScreenHidden>*/}
+        {/*            <FormattedMessage id="feed" defaultMessage="Feed" />*/}
+        {/*          </PopoverMenuItem>*/}
+        {/*          <PopoverMenuItem key="news" fullScreenHidden>*/}
+        {/*            <FormattedMessage id="news" defaultMessage="News" />*/}
+        {/*          </PopoverMenuItem>*/}
+        {/*          <PopoverMenuItem key="replies" fullScreenHidden>*/}
+        {/*            <FormattedMessage id="replies" defaultMessage="Replies" />*/}
+        {/*          </PopoverMenuItem>*/}
+        {/*          <PopoverMenuItem key="wallet" fullScreenHidden>*/}
+        {/*            <FormattedMessage id="wallet" defaultMessage="Wallet" />*/}
+        {/*          </PopoverMenuItem>*/}
+        {/*          <PopoverMenuItem key="activity">*/}
+        {/*            <FormattedMessage id="activity" defaultMessage="Activity" />*/}
+        {/*          </PopoverMenuItem>*/}
+        {/*          <PopoverMenuItem key="bookmarks">*/}
+        {/*            <FormattedMessage id="bookmarks" defaultMessage="Bookmarks" />*/}
+        {/*          </PopoverMenuItem>*/}
+        {/*          <PopoverMenuItem key="drafts">*/}
+        {/*            <FormattedMessage id="drafts" defaultMessage="Drafts" />*/}
+        {/*          </PopoverMenuItem>*/}
+        {/*          <PopoverMenuItem key="settings">*/}
+        {/*            <FormattedMessage id="settings" defaultMessage="Settings" />*/}
+        {/*          </PopoverMenuItem>*/}
+        {/*          <PopoverMenuItem key="logout">*/}
+        {/*            <FormattedMessage id="logout" defaultMessage="Logout" />*/}
+        {/*          </PopoverMenuItem>*/}
+        {/*        </PopoverMenu>*/}
+        {/*      }*/}
+        {/*    >*/}
+        {/*      <a className="Topnav__link Topnav__link--light">*/}
+        {/*        <i className="iconfont icon-caretbottom" />*/}
+        {/*      </a>*/}
+        {/*    </Popover>*/}
+        {/*  </Menu.Item>*/}
+        {/*</Menu>*/}
       </div>
     );
   };
@@ -395,8 +469,9 @@ class Topnav extends React.Component {
               {/*busy*/}
             {/*</Link>*/}
             <Link className="Topnav__brand" to="/">
-              <img style={{width: '150px',marginLeft: '-8px'}} src="/images/logo4.png" alt="EasySocial"/>
+              <img style={{width: '100px',marginLeft: '10px'}} src="images/white-logo.png" alt="Banter"/>
             </Link>
+            &nbsp;
             <span className="Topnav__version">beta</span>
           </div>
           <div className="center">
@@ -449,6 +524,8 @@ class Topnav extends React.Component {
                 {/*})}*/}
               {/*/>*/}
             {/*</button>*/}
+
+
             {this.content()}
           </div>
         </div>
