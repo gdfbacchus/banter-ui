@@ -469,7 +469,7 @@ class Topnav extends React.Component {
               {/*busy*/}
             {/*</Link>*/}
             <Link className="Topnav__brand" to="/">
-              <img style={{width: '100px',marginLeft: '10px'}} src="images/white-logo.png" alt="Banter"/>
+              <img style={{width: '100px',marginLeft: '10px'}} src="images/BanterLogoLong.png" alt="Banter"/>
             </Link>
             &nbsp;
             <span className="Topnav__version">beta</span>
