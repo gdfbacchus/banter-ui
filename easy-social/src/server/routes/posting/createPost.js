@@ -46,11 +46,11 @@ const  createPost = (req,res,next) => {
 
   let opts = {};
 //connect to production server
-  opts.addressPrefix = constants.ES.PREFIX;
-  opts.chainId = constants.ES.CHAIN_ID;
+  opts.addressPrefix = constants.BTRS.PREFIX;
+  opts.chainId = constants.BTRS.CHAIN_ID;
 
 //connect to server which is connected to the network/production
-  let client = new dsteem.Client(constants.ES.API_ADDRESS);
+  let client = new dsteem.Client(constants.BTRS.API_ADDRESS);
 
   // const op = [
   //   'account_create',

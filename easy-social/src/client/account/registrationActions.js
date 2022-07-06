@@ -115,7 +115,7 @@ export const isAvailablePassword = (accountName, pass) => (dispatch, getState, {
   // console.log("isAvailablePassword Action");
   // console.log("accountName: ",accountName);
   // console.log("pass: ",pass);
-  
+
   // const isValidPass = WalletDb.validatePassForRegistration(pass, accountName);
   //
   // isValidPass.then( (isValid)=>{
@@ -203,7 +203,7 @@ export  const register = (accountName, password) => (dispatch, getState, { steem
   const posting = postingAuth;
   const memo = memoKey;
   const broadcast = true;
-  const fee = '5.000 SOCIAL';
+  const fee = '5.000 BTRS';
 
   const op = [
     'account_create',

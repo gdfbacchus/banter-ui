@@ -4,25 +4,20 @@ const options = {
   timeout: 15000
 };
 
-const easysocialUrl = process.env.STEEMJS_URL || 'https://node.banter.network';
-// const easysocialUrl = process.env.STEEMJS_URL || 'https://proxy.banter.network';//PROXY
+// const easysocialUrl = process.env.STEEMJS_URL || 'https://node.banter.network';
+const banterNodeUrl = process.env.STEEMJS_URL || 'https://node.banternetwork.io';
 
-// console.log('Client steemAPI process.env.STEEMJS_URL: ',process.env.STEEMJS_URL);
-// console.log("Client steemUrl: ", steemUrl);
-
-//console.log('Client easysocial _URL: ',easysocialUrl);
-
-const client = createClient(easysocialUrl, options);
-console.log('[BANTER] easysocialUrl: ', easysocialUrl);
+const client = createClient(banterNodeUrl, options);
+console.log('[BANTER] banterNodeUrl: ', banterNodeUrl);
 console.log('[BANTER] client: ', client);
-console.log('[BANTER] process.env.STEEMJS_URL: ', process.env.STEEMJS_URL);
+console.log('[BANTER] process.env.STEEMJS_URL ->>>>>>>: ', process.env.STEEMJS_URL);
 console.log('[BANTER] process.env.PORT: ', process.env.PORT);
 
 
 
 client.sendAsync = (message, params) =>
   new Promise((resolve, reject) => {
-    //rpc client -> send message and params
+    // rpc client -> send message and params
     // if(message==='get_discussions_by_trending'){
     //   message='tags_api.get_discussions_by_trending'
     //   params = [ { tag: 'steem', limit: 10 } ];

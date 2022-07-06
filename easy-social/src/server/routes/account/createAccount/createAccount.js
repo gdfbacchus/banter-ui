@@ -43,10 +43,10 @@ const  createAccount = (req,res,next) => {
 
   let opts = {};
 //connect to production server
-  opts.addressPrefix = constants.ES.PREFIX;
-  opts.chainId = constants.ES.CHAIN_ID;
+  opts.addressPrefix = constants.BTRS.PREFIX;
+  opts.chainId = constants.BTRS.CHAIN_ID;
 
-  let client = new dsteem.Client(constants.ES.API_ADDRESS, opts);
+  let client = new dsteem.Client(constants.BTRS.API_ADDRESS, opts);
 
   let avail = 'Account is NOT available to register';
   const _account = client.database.call('get_accounts', [[accountName]]).then((resp)=>{
@@ -105,7 +105,7 @@ const  createAccount = (req,res,next) => {
               posting: postingAuth,
               memo_key: memoKey,
               json_metadata: '',
-              fee: constants.ES.CREATION_ACCOUNT_FEE
+              fee: constants.BTRS.CREATION_ACCOUNT_FEE
             }
           ];
           /*

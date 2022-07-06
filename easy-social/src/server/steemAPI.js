@@ -1,7 +1,7 @@
 const createClient = require('lightrpc').createClient;
 
-const url = process.env.STEEMJS_URL || 'https://node.banter.network';
-// const url = process.env.STEEMJS_URL || 'https://proxy.banter.network';//PROXY
+// const url = process.env.STEEMJS_URL || 'https://node.banter.network';
+const url = process.env.STEEMJS_URL || 'https://node.banternetwork.io';
 
 const port = process.env.PORT;
 console.log('Server steemAPI process.env.STEEMJS_URL: ',process.env.STEEMJS_URL);
@@ -13,7 +13,7 @@ const client = createClient(url);
 client.sendAsync = (message, params) =>
   new Promise((resolve, reject) => {
     client.send(message, params, (err, result) => {
-      //rpc client -> send message and params
+      // rpc client -> send message and params
       // console.log('s server steemApi request');
       // console.log('s message: ',message);
       // console.log('s params: ',params);

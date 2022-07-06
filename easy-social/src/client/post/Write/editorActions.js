@@ -135,12 +135,12 @@ const broadcastComment = (
     permlink,
     allow_votes: true,
     allow_curation_rewards: true,
-    max_accepted_payout: '1000000.000 SOCIAL',
+    max_accepted_payout: '1000000.000 BTRS',
     percent_steem_dollars: 10000,
   };
 
   if (reward === rewardsValues.none) {
-    commentOptionsConfig.max_accepted_payout = '0.000 SOCIAL';
+    commentOptionsConfig.max_accepted_payout = '0.000 BTRS';
   } else if (reward === rewardsValues.all) {
     commentOptionsConfig.percent_steem_dollars = 0;
   }

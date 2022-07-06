@@ -3,6 +3,7 @@ import thunk from 'redux-thunk';
 import { applyMiddleware, createStore, compose } from 'redux';
 import { routerMiddleware } from 'react-router-redux';
 import steemAPI from './steemAPI';
+import constants from '../server/routes/common/constants';
 
 const dsteem = require('dsteem');
 
@@ -12,7 +13,7 @@ opts.chainId = '4ff15a093f2777fd61a9381fc62dfb3fd54e3770494afcfb392a51352715b4e9
 
 //connect to server which is connected to the network/testnet
 // const dsteemClient = new dsteem.Client('http://79.143.179.62:8282',opts);
-const dsteemClient = new dsteem.Client('https://node.banter.network',opts);
+const dsteemClient = new dsteem.Client(constants.BTRS.API_ADDRESS,opts);
 
 
 

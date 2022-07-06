@@ -56,7 +56,7 @@ const UserWalletSummary = ({
       <img src="/favicon.ico" />
       <i className="iconfont UserWalletSummary__icon" />
       <div className="UserWalletSummary__label">
-        <FormattedMessage id="social" defaultMessage="Social" />
+        <FormattedMessage id="banter" defaultMessage="Banter" />
       </div>
       <div className="UserWalletSummary__value">
         {loading ? (
@@ -64,7 +64,7 @@ const UserWalletSummary = ({
         ) : (
           <span>
             <FormattedNumber value={parseFloat(user.balance)} />
-            {' SOCIAL'}
+            {' BTRS'}
           </span>
         )}
       </div>
