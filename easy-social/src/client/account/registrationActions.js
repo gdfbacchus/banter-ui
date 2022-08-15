@@ -151,9 +151,10 @@ export  const register = (accountName, password) => (dispatch, getState, { steem
   console.log("Call Registration Action");
   const opts = {
     addressPrefix: 'BTS',
-    chainId: '4ff15a093f2777fd61a9381fc62dfb3fd54e3770494afcfb392a51352715b4e9'
+    chainId: '9e42d42746f9f0ae04ce62e1c1bc4901db89c4b805386a23dd73ea202b1cae14'
   };
-  const dsteemClient = new dsteem.Client('https://node.banter.network',opts);
+  const banterNodeUrl = process.env.STEEMJS_URL || 'https://node.banternetwork.io';
+  const dsteemClient = new dsteem.Client(banterNodeUrl,opts);
 
   const ownerKey = dsteem.PrivateKey.fromLogin(accountName, password, 'owner');
   const activeKey = dsteem.PrivateKey.fromLogin(accountName, password, 'active');
