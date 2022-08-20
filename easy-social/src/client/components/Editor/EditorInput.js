@@ -172,7 +172,7 @@ class EditorInput extends React.Component {
   }
 
   resizeTextarea() {
-    if (this.originalInput) this.originalInput.resizeTextarea();
+    if (this.originalInput && this.originalInput.resizeTextarea) this.originalInput.resizeTextarea();
   }
 
   handlers = {
@@ -230,6 +230,8 @@ class EditorInput extends React.Component {
       this.setState({
         imageUploading: true,
       });
+
+
 
       this.props.onImageUpload(e.target.files[0], this.disableAndInsertImage, () =>
         this.setState({

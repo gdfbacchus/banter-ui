@@ -9,6 +9,8 @@ export const SAVE_SETTINGS_ERROR = '@app/SAVE_SETTINGS_ERROR';
 
 import { createAsyncActionType } from '../helpers/stateHelpers';
 import { getAccountWithFollowingCount as getAccountWithFollowingCountAPI } from '../helpers/apiHelpers';
+import dsteemClient from '../dsteemAPI';
+import { getAuthenticatedUserWifs } from '../reducers';
 
 export const GET_ACCOUNT = createAsyncActionType('@users/GET_ACCOUNT');
 
@@ -46,13 +48,16 @@ export function saveProfileSettings(settings) {
   // });
   // console.log("Changed Settings : ",settings);
 
+  console.log("[BANTER] saveProfileSettings ACTION settings: ",settings);
 
 
-
-  return (dispatch, getState, { dsteemClient }) => {
+  // return (dispatch, getState, { dsteemClient }) => {
+  return (dispatch, getState) => {
     const state = getState();
     const user = state.auth.user;
-
+    const userWifs = getAuthenticatedUserWifs(state);
+    console.log("[BANTER] saveProfileSettings ACTION state.auth: ",state.auth);
+    console.log("[BANTER] saveProfileSettings ACTION userWifs: ", userWifs);
 
     dispatch({
       type: ACTION_TYPES.SAVE_PROFILE_SETTINGS,
@@ -61,12 +66,16 @@ export function saveProfileSettings(settings) {
           broadcastProfileSettings(
             dsteemClient,
             user,
-            settings
+            settings,
+            userWifs,
           ).then(result => {
             // dispatch(setPostCommentSuccessStatus());
-            //console.log("Save Profile Settings SUCCESS response 1: ",result);
+            console.log("[BANTER] Save Profile Settings SUCCESS response 1: ",result);
 
             //TODO Fetch account withthe new settings
+
+
+
             return dsteemClient.database.call('get_accounts', [[user.name]]).then((resp)=>{
               // console.log("RESP: ",resp)
               // console.log("RESP[0]: ",resp[0])

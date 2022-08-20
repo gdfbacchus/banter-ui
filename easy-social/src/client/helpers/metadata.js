@@ -1,5 +1,6 @@
 import omit from 'lodash/omit';
 import SteemConnect from '../steemConnectAPI';
+import constants from '../../server/routes/common/constants.js'
 const dsteem = require('dsteem');
 // import WalletDb from "../account/loginBts/stores/WalletDb";
 
@@ -77,60 +78,51 @@ export const saveNotificationsLastTimestamp = lastTimestamp =>
 export default getMetadata;
 
 
-export const broadcastProfileSettings = (dsteemClient, user, settings) => {
-  const operations = [];
+export const broadcastProfileSettings = (dsteemClient, user, settings, userWifs) => {
+  console.log('[BANTER] broadcastProfileSettings user: ', user)
+  console.log('[BANTER] broadcastProfileSettings settings: ', settings)
+  console.log('[BANTER] broadcastProfileSettings userWifs: ', userWifs)
+  const { ownerWif } = userWifs;
+  const privOwnerKey = dsteem.PrivateKey.from(ownerWif);
 
+  const operations = [];
   const accountName = user.name;
-  const active_pubk = user.active.key_auths[0][0];
-  const memo_public_key = user.memo_key;
-  // const private_active_key = WalletDb.getPrivateKey(active_pubk);
-  // const activeWif = private_active_key.toWif();
-  // //console.log("saveProfileSettings user: ",user);
-  // // console.log("saveProfileSettings memo_public_key: ",memo_public_key);
-  // // console.log("saveProfileSettings accountName: ",accountName);
-  // // console.log("PUBLIC ACTIVE KEY: ",active_pubk);
-  // // console.log("PRIVATE ACTIVE KEY activeWif : ", activeWif);
-  //
-  // let newMetadata = {};
-  // // if(user.json_metadata) {
-  // //   parsedMetadata = JSON.parse(metaData);
-  // // } else {
-  // //   parsedMetadata = {};
-  // // }
+
+  const newMetadata = {};
+  // if(user.json_metadata) {
+  //   parsedMetadata = JSON.parse(metaData);
+  // } else {
+  //   parsedMetadata = {};
+  // }
   //
   //
   // //console.log("parsedMetadata 1: ",parsedMetadata);
-  // newMetadata['profile'] = settings;
-  // console.log("New metadata : ",newMetadata);
-  // //console.log("metaData: ",metaData);
-  // //console.log("parsedMetadata 2: ",parsedMetadata);
-  //
-  // const settingsOp = [
-  //   'account_update',
-  //   {
-  //     account: accountName,
-  //     // owner: optional(authority),
-  //     // active: optional(authority),
-  //     // posting: optional(authority),
-  //     memo_key: memo_public_key,
-  //     json_metadata: JSON.stringify(newMetadata)
-  //   },
-  // ];
-  // operations.push(settingsOp);
-  //
-  //
-  // // console.log("POSTING WIF: ",postingWif);
-  // // const privKey1 = dsteem.PrivateKey.fromString(postingWif);//That's Working
-  // // console.log("PrivateKey.fromString: ",postingWif);
-  //
-  // const privKey2 = dsteem.PrivateKey.from(activeWif);//That's Working
-  // //console.log("PrivateKey.from: ",activeWif);
-  // //console.log("POST Operations before send: ",operations);
-  //
-  // //BROADCAST MULTIPLE OPERATIONS
-  // return dsteemClient.broadcast.sendOperations(operations, privKey2);
+  newMetadata.profile = settings;
+  console.log("[BANTER] broadcastProfileSettings New metadata : ",newMetadata);
 
-  //.then(resp => resp.user_metadata.settings);
+  const settingsOp = [
+    'account_update',
+    {
+      account: accountName,
+      owner: user.owner,
+      active: user.active,
+      posting: user.posting,
+      memo_key: user.memo_key,
+      json_metadata: JSON.stringify(newMetadata)
+    },
+  ];
+  operations.push(settingsOp);
+  console.log("[BANTER] broadcastProfileSettings operations : ", operations);
+
+  // //BROADCAST MULTIPLE OPERATIONS
+  return dsteemClient.broadcast.sendOperations(operations, privOwnerKey);
+    // .then(resp => {
+    //   console.log("[BANTER] broadcastProfileSettings dsteemClient.broadcast.sendOperations() -> resp : ",resp);
+    //   return resp.user_metadata.settings
+    // })
+    // .catch((err) => {
+    //   console.error("[BANTER] broadcastProfileSettings ERROR:: ",err);
+    // })
 };
 
 

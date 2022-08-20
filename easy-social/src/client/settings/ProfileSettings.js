@@ -126,7 +126,8 @@ export default class ProfileSettings extends React.Component {
             }),
             {},
           );
-        // console.log("cleanValues: ",cleanValues);
+        console.log("[BANTER] ProfileSettings -> handleSubmit() cleanValues: ",cleanValues);
+        console.log("[BANTER] ProfileSettings -> handleSubmit() values: ",values);
         //this.props.saveProfileSettings(cleanValues);
         this.props.saveProfileSettings(values);
       }
@@ -225,7 +226,7 @@ export default class ProfileSettings extends React.Component {
                     <FormItem>
                       {getFieldDecorator('about')(
                         <Input.TextArea
-                          autosize={{ minRows: 2, maxRows: 6 }}
+                          autoSize={{ minRows: 2, maxRows: 6 }}
                           placeholder={intl.formatMessage({
                             id: 'profile_about_placeholder',
                             defaultMessage: 'Few words about you',
@@ -340,7 +341,8 @@ export default class ProfileSettings extends React.Component {
                   </div>
                 </div>
                 {/*<Action primary big type="submit" disabled={true} />*/}
-                <Action primary big type="submit" disabled={!form.isFieldsTouched() || this.props.isSavingProfileSettings} >
+                {/*<Action primary big type="submit" disabled={!form.isFieldsTouched() || this.props.isSavingProfileSettings} >*/}
+                <Action primary big type="submit" disabled={!form.isFieldsTouched() } >
                   <FormattedMessage id="save" defaultMessage="Save" />
                 </Action>
                 {profileSaveStaus === "error" ?

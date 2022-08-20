@@ -43,7 +43,10 @@ export default function withEditor(WrappedComponent) {
       // if(username){
       //   formData.append('username',username);
       // }
-      console.log("formData: ",formData)
+      console.log("[BANTER] withEditor -> handleImageUpload -> formData: ",formData)
+      console.log("[BANTER] withEditor -> handleImageUpload -> callback: ",callback)
+
+
 
       // fetch(`https://ipfs.busy.org/upload`, {
       //   method: 'POST',
@@ -58,16 +61,17 @@ export default function withEditor(WrappedComponent) {
       })
         .then(res => res.json())
         .then(res => {
-          console.log("upload response: ", res);
-          //const serverName = 'http://localhost:3000/';
-          // const serverName = 'https://easysocial.life/';
+          console.log("[BANTER] withEditor -> handleImageUpload ->  upload response: ", res);
+          console.log("[BANTER] withEditor -> handleImageUpload ->  upload response url: ", res.url);
+          // const serverName = 'http://localhost:3000/';
+          // const serverName = process.env.STEEMJS_URL;
           // const addressStr = res.url.substr(res.url.indexOf('uploads'));
-          // console.log("img link: ",serverName+addressStr);
-          //return;
+          // console.log("[BANTER] withEditor -> handleImageUpload -> response img link: ", `${serverName}${addressStr}`);
+          // return;
           callback(res.url, blob.name);
         })
         .catch(err => {
-          console.log('err', err);
+          console.error('[BANTER] err', err);
           errorCallback();
           message.error(
             formatMessage({
