@@ -21,6 +21,8 @@ module.exports = {
     // API_ADDRESS: "http://79.143.179.62:8080",
     API_ADDRESS: "https://node.banter.network",
     CREATION_ACCOUNT_FEE: "5.000 SOCIAL"
-  }
+  },
 
+  UPLOAD_IMAGE_URL: "/es-api/v0/upload",
+  BASE_URL: "https://banter.network"
 };
