@@ -43,7 +43,6 @@ export class FollowPure extends React.Component {
     const { isHovered } = this.state;
     const isDangerStyles = isFollowed && (isHovered || pending);
 
-    /*
     let followingText = intl.formatMessage({ id: 'follow', defaultMessage: 'Follow' });
     if (isFollowed && !(isHovered || pending)) {
       followingText = intl.formatMessage({ id: 'followed', defaultMessage: 'Following' });
@@ -56,52 +55,22 @@ export class FollowPure extends React.Component {
     } else if (!isFollowed && pending) {
       followingText = intl.formatMessage({ id: 'followed', defaultMessage: 'Following' });
     }
-    */
-    let imgStyle = 'eyes';
-    let imgSrc = "/images/icons/closed_eyes.png";
-    let btnTitle = 'Watch';
-    let followingText = intl.formatMessage({ id: 'watch', defaultMessage: 'Watch' });
-    if (isFollowed && !(isHovered || pending)) {
-      //followingText = intl.formatMessage({ id: 'watching', defaultMessage: 'Watching' });
-      btnTitle = 'Unwatch';
-      imgSrc = '/images/icons/opened_eyes.png';
-
-    } else if (isFollowed && isHovered && !pending) {
-      //followingText = intl.formatMessage({ id: 'unwatch', defaultMessage: 'Unwatch' });
-      btnTitle = 'Unwatch';
-
-    } else if (isFollowed && pending) {
-      //followingText = intl.formatMessage({ id: 'unfollowing', defaultMessage: 'Unfollowing' });
-
-    } else if (!isFollowed && isHovered && !pending) {
-      //followingText = intl.formatMessage({ id: 'watch', defaultMessage: 'Watch' });
-      btnTitle = 'Watch';
-      imgSrc = '/images/icons/opened_eyes.png';
-    } else if (!isFollowed && pending) {
-      //followingText = intl.formatMessage({ id: 'watching', defaultMessage: 'Watching' });
-      btnTitle = 'Unwatch';
-      imgSrc = '/images/icons/opened_eyes.png';
-    }
-
-
-
 
     return (
       <button
         className={classNames('Follow', {
-          // 'Follow--danger': isDangerStyles,
-          // 'Follow--danger--secondary': isDangerStyles && secondary,
+          'Follow--danger': isDangerStyles,
+          'Follow--danger--secondary': isDangerStyles && secondary,
           'Follow--secondary': secondary,
         })}
         style={{border:0, backgroundColor: 'transparent !important'}}
         onClick={this.handleClick}
         onMouseOver={this.onMouseOver}
         onMouseOut={this.onMouseOut}
-        title={btnTitle}
+        title={followingText}
       >
         {pending && <Icon type="loading" />}
-        <span><img alt={btnTitle} className={imgStyle} src={imgSrc} /></span>
-        {/*{followingText}*/}
+        {followingText}
       </button>
     );
   }

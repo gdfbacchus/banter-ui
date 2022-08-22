@@ -71,13 +71,15 @@ class UserMenu extends React.Component {
               >
                 <FormattedMessage id="comments" defaultMessage="Comments" />
               </li>
+
+
               <li
                 className={this.getItemClasses('followers')}
                 onClick={this.handleClick}
                 role="presentation"
                 data-key="followers"
               >
-                <FormattedMessage id="watching_you" defaultMessage="Watching you" />
+                <FormattedMessage id="following_you" defaultMessage="Following you" />
                 <span className="UserMenu__badge">
                   <FormattedNumber value={this.props.followers} />
                 </span>
@@ -88,7 +90,7 @@ class UserMenu extends React.Component {
                 role="presentation"
                 data-key="followed"
               >
-                <FormattedMessage id="watching" defaultMessage="Watching" />
+                <FormattedMessage id="following" defaultMessage="Following" />
                 <span className="UserMenu__badge">
                   <FormattedNumber value={this.props.following} />
                 </span>
