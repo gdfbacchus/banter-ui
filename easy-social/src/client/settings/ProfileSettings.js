@@ -99,6 +99,7 @@ export default class ProfileSettings extends React.Component {
     this.isImagesTouched = this.isImagesTouched.bind(this);
     this.onRemoveUploadedFile = this.onRemoveUploadedFile.bind(this);
     this.onChangeImageUpload = this.onChangeImageUpload.bind(this);
+    this.getImagesValues = this.getImagesValues.bind(this);
   }
 
   componentDidMount() {
@@ -188,12 +189,20 @@ export default class ProfileSettings extends React.Component {
   }
 
 
+  getImagesValues() {
+    const { profileImage, coverImage } = this.state;
+    return {
+      profile_image: profileImage,
+      cover_image: coverImage,
+    }
+  }
+
   handleSubmit(e) {
     e.preventDefault();
     const { form } = this.props;
 
     if (!form.isFieldsTouched() && !this.isImagesTouched()) return;
-    const touchedImages = this.isImagesTouched();
+    const images = this.getImagesValues();
 
 
     form.validateFields((err, values) => {
@@ -209,13 +218,10 @@ export default class ProfileSettings extends React.Component {
         //     }),
         //     {},
         //   );
-        Object.keys(touchedImages).forEach((field) => {
-          values[field] = touchedImages[field];
-        })
-
-        console.log("[BANTER] ProfileSettings -> handleSubmit() values: ",values);
+        const updatedValues = {...values, ...images}
+        console.log("[BANTER] ProfileSettings -> handleSubmit() updatedValues: ",updatedValues);
         //this.props.saveProfileSettings(cleanValues);
-        this.props.saveProfileSettings(values);
+        this.props.saveProfileSettings(updatedValues);
       }
     });
   }
