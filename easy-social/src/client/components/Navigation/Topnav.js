@@ -143,7 +143,7 @@ class Topnav extends React.Component {
       >
         <Button className="banter-login ">
           <Link to="/login" className="Topnav__link Topnav__link--action">
-            <FormattedMessage id="login" defaultMessage="Log in" />
+            <FormattedMessage id="login" defaultMessage="log in" />
           </Link>
         </Button>
         <Button className="banter-signup">

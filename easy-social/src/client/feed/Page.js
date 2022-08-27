@@ -16,6 +16,10 @@ import ScrollToTop from '../components/Utils/ScrollToTop';
 import ScrollToTopOnMount from '../components/Utils/ScrollToTopOnMount';
 import QuickPostEditor from '../components/QuickPostEditor/QuickPostEditor';
 import LinksRightNav from '../components/Sidebar/LinksRightNav';
+import {Redirect} from "react-router";
+import Avatar from "../components/Avatar";
+import {Link} from "react-router-dom";
+import { Button } from 'antd';
 
 @connect(state => ({
   authenticated: getIsAuthenticated(state),
@@ -69,6 +73,17 @@ class Page extends React.Component {
             <Affix className="leftContainer" stickPosition={77}>
               <div className="left">
                 <LeftSidebar />
+                {/*<a href="https://banternetwork.info" role="button" tabIndex="0"><span>more info</span></a>*/}
+                <div>
+                  <Button className="left-sidebar-link" href="https://banternetwork.info" target="_blank" type="link">
+                    more info
+                  </Button>
+                </div>
+                <div>
+                  <Button className="left-sidebar-link" href="https://tokensale.banter.network" target="_blank" type="link">
+                    get tokens
+                  </Button>
+                </div>
               </div>
             </Affix>
             <Affix className="rightContainer" stickPosition={77}>
