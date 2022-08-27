@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { IntlProvider } from 'react-intl';
 import { withRouter } from 'react-router-dom';
 import { renderRoutes } from 'react-router-config';
-import { LocaleProvider, Layout } from 'antd';
+import { LocaleProvider, Layout, Alert } from 'antd';
 import enUS from 'antd/lib/locale-provider/en_US';
 import Cookie from 'js-cookie';
 import { findLanguage, getRequestLocale, getBrowserLocale, loadLanguage } from './translations';
@@ -230,6 +230,12 @@ export default class Wrapper extends React.PureComponent {
               <Topnav username={user.name} metadata={user.json_metadata} onMenuItemClick={this.handleMenuItemClick} />
             </Layout.Header>
             <div className="content">
+              <Alert
+                message="This is a testnet. All rewards are for testing purposes. Testnet tokens have no value"
+                description=""
+                type="error"
+                closable
+              />
               {renderRoutes(this.props.route.routes)}
               <Redirect />
               <Transfer />
