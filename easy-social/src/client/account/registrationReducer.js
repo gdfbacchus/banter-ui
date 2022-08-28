@@ -51,7 +51,6 @@ export default (state = initialState, action) => {
       };
 
     case types.SET_IS_AV_REG_ACCOUNT:
-      console.log("REDUCER CHECK ACCOUNT FOR REG: ",action.payload.isAvailableAccount);
       return {
         ...state,
         isAvailableAccount: action.payload.isAvailableAccount

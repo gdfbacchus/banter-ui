@@ -1,74 +1,6 @@
-
 import { createAction } from 'redux-actions';
-// import {Apis} from "bitsharesjs-ws";
-// import {ChainStore, PrivateKey, key, Aes} from "bitsharesjs";
-// import WalletDb from "./loginBts/stores/WalletDb";
 const dsteem = require('dsteem');
-import {getAccount} from "../helpers/apiHelpers"
-import endpoints from "../costants/endpoints";
-// import dsteemClient from '../dsteemAPI';
 
-//import steem from '@steemit/steem-js';
-//const privateWif = steem.auth.toWif(username, password, roles[0]);
-//steem.auth.isWif(password)
-//const publicWif = steem.auth.wifToPublic(privateWif);
-
-//if (
-//  (roles[i] === 'memo' && account.memo_key === publicWif) ||
-//  (roles[i] !== 'memo' && this.keyAuthsHasPublicWif(account[roles[i]].key_auths, publicWif))
-//)
-
-/** Create proxy account */
-/*
-
-await steem.broadcast.accountCreateWithDelegationAsync(
-  auth.wif,
-  accountCreationFee,
-  '0.000000 VESTS',
-  auth.username,
-  clientId,
-  owner,
-  active,
-  posting,
-  publicKeys.memo,
-  { owner: this.props.auth.user.name },
-  []
-).then(async () => {
-  // Wait 5 seconds to insure the newly created account is indexed on the node
-  await sleep(5000);
-
-  // Send request to server for create app
-  fetch(`/api/apps/@${clientId}`, {
-    headers: new Headers({
-      Authorization: this.props.auth.token,
-    }),
-    method: 'POST',
-  })
-    .then(res => res.json())
-    .then((data) => {
-      if (!data.error) {
-        // Redirect to edit app
-        browserHistory.push(`/apps/@${clientId}/edit`);
-        notification.success({
-          message: intl.formatMessage({ id: 'success' }),
-          description: intl.formatMessage({ id: 'success_proxy_account' }, { clientId }),
-        });
-      } else {
-        this.setState({ isLoading: false });
-        notification.error({
-          message: intl.formatMessage({ id: 'error' }),
-          description: data.error || intl.formatMessage({ id: 'general_error' }),
-        });
-      }
-    });
-}).catch((err) => {
-  this.setState({ isLoading: false });
-  notification.error({
-    message: intl.formatMessage({ id: 'error' }),
-    description: getErrorMessage(err) || intl.formatMessage({ id: 'general_error' }),
-  });
-});
-*/
 const TYPES = {
   SET_IS_AV_REG_ACCOUNT: "SET_IS_AV_REG_ACCOUNT",
   LOGIN_ERROR: '@es_auth/LOGIN_ERROR',
@@ -89,15 +21,12 @@ export const isAvailableAccount = (accountName) => (dispatch, getState, { steemA
       let isAv = false;
 
       if(resp.length===0) {
-        console.log("There is no such ES account: ",resp);
+        console.log("[BANTER] There is no such ES account: ",resp);
         isAv = true;
       }
       else if(resp.length === 1) {
-        console.log("Found ES account - response: ",resp)
+        console.log("[BANTER] Found account - response: ", resp)
       }
-      // else {
-      //   console.log("Found some ES accounts - response: ",resp)
-      // }
 
       return dispatch({
         type: TYPES.SET_IS_AV_REG_ACCOUNT,
@@ -115,7 +44,7 @@ export const isAvailablePassword = (accountName, pass) => (dispatch, getState, {
   // console.log("isAvailablePassword Action");
   // console.log("accountName: ",accountName);
   // console.log("pass: ",pass);
-  
+
   // const isValidPass = WalletDb.validatePassForRegistration(pass, accountName);
   //
   // isValidPass.then( (isValid)=>{
@@ -176,25 +105,6 @@ export  const register = (accountName, password) => (dispatch, getState, { steem
     key_auths: [[postingKey.createPublic(opts.addressPrefix), 1]],
   };
 
-  console.log("ownerKey.createPublic(): ",ownerKey.createPublic(opts.addressPrefix));
-  console.log("ownerKey.createPublic().key: ",ownerKey.createPublic(opts.addressPrefix).key);
-  console.log("ownerKey: ",ownerKey);
-  console.log("ownerAuth: ",ownerAuth);
-  console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
-  console.log("activeKey: ",activeKey);
-  console.log("activeAuth: ",activeAuth);
-  console.log("activeKey.createPublic(): ",activeKey.createPublic(opts.addressPrefix));
-  console.log("activeKey.createPublic().key: ",activeKey.createPublic(opts.addressPrefix).key);
-  console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
-  console.log("postingKey: ",postingKey);
-  console.log("postingAuth: ",postingAuth);
-  console.log("postingKey.createPublic(): ",postingKey.createPublic(opts.addressPrefix));
-  console.log("postingKey.createPublic().key: ",postingKey.createPublic(opts.addressPrefix).key);
-  console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
-  console.log("memoKey: ",memoKey);
-  console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
-
-  // const creator = 'init1';
   const creator = 'banter';
   const newName = accountName;;
   const json_meta = '';
@@ -227,26 +137,14 @@ export  const register = (accountName, password) => (dispatch, getState, { steem
 
   dsteemClient.broadcast.sendOperations([op], privateKey)
     .then(
-      // function(result) {
-      //   console.log("[BANTER] CREATE ACCOUNT RESPONSE: ", result);
-      //
-      // },
-      // function(error) {
-      //   console.error("[BANTER] CREATE ACCOUNT ERROR: ", error);
-      // }
-
-
       data => {
-        console.log("[BANTER] CREATE ACCOUNT RESPONSE DATA: ", data);
-
         dsteemClient.database.call('get_accounts', [[accountName]])
           .then((_account) => {
-            console.log(`[BANTER] _account search:`, _account);
             if(_account.length===0) {
-              console.log("[BANTER] There is no such ES account: ",_account);
+              console.log("[BANTER] There is no such account: ",_account);
             }
             else if(_account.length === 1) {
-              console.log("[BANTER] Found ES account - response: ",_account)
+              console.log("[BANTER] Found account - response: ",_account)
               localStorage.setItem('registerdAccount', _account[0]);
               return Promise.all([
                 dispatch({
@@ -258,18 +156,18 @@ export  const register = (accountName, password) => (dispatch, getState, { steem
             }
           })
           .catch((err)=>{
-            console.log("[BANTER] GET ACCOUNTS ERROR: ",err)
+            console.error("[BANTER] GET ACCOUNTS ERROR: ",err)
           });
       },
       error => {
-        console.log( "[BANTER] CREATE ACCOUNT ERROR2: ",error  );
+        console.error( "[BANTER] CREATE ACCOUNT ERROR2: ",error  );
         return dispatch({
           type: TYPES.RGISTRATION_ERROR,
           payload: {}
         })
       })
     .catch(err => {
-      console.log("[BANTER] CREATE ACCOUNT ERROR3: ", err);
+      console.error("[BANTER] CREATE ACCOUNT ERROR3: ", err);
       return dispatch({
         type: TYPES.RGISTRATION_ERROR,
         payload: {}

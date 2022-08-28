@@ -1,14 +1,7 @@
 import { createAction } from 'redux-actions';
-// import {Apis} from "bitsharesjs-ws";
-// import {ChainStore} from "bitsharesjs";
-// import WalletDb from "./loginBts/stores/WalletDb";
-
-// import { getAllFollowing } from '../helpers/apiHelpers';
 import dsteemClient from '../dsteemAPI';
 import {LOGIN_ERROR} from "../auth/authActions";
-
 const dsteem = require('dsteem');
-
 
 const TYPES = {
   LOGIN_START: '@es_auth/LOGIN_START',
@@ -46,21 +39,6 @@ function isValidAccount (account, accountName, password) {
   const ownerWif  = ownerKey.toString();
   const memoWif = dsteem.PrivateKey.fromLogin(accountName, password, 'memo').toString();
 
-  console.log("[BANTER] -------------------------------------------------------------------------");
-  console.log("[BANTER] postigWif: ", localStorage.getItem('postigWif'));
-
-  console.log("[BANTER] -------------------------------------------------------------------------");
-  console.log("[BANTER] generated owner pub key : ", ownerKeyFromPrivateKey);
-  console.log("[BANTER] generated active pub key : ", activeKeyFromPrivateKey);
-  console.log("[BANTER] generated posting pub key : ", postingKeyFromPrivateKey);
-  console.log("[BANTER] generated memo pub key : ", memoKey);
-  console.log("[BANTER] -------------------------------------------------------------------------");
-
-  console.log("[BANTER] ownerKeyFromAccount===ownerKeyFromPrivateKey : ", ownerKeyFromAccount===ownerKeyFromPrivateKey);
-  console.log("[BANTER] activeKeyFromAccount===activeKeyFromPrivateKey : ", activeKeyFromAccount===activeKeyFromPrivateKey);
-  console.log("[BANTER] postingKeyFromAccount===postingKeyFromPrivateKey : ", postingKeyFromAccount===postingKeyFromPrivateKey);
-  console.log("[BANTER] memoKeyFromAccount===memoKey : ", memoKeyFromAccount===memoKey);
-  console.log("[BANTER] -------------------------------------------------------------------------");
   if (ownerKeyFromAccount===ownerKeyFromPrivateKey
       && activeKeyFromAccount===activeKeyFromPrivateKey
       && postingKeyFromAccount===postingKeyFromPrivateKey
