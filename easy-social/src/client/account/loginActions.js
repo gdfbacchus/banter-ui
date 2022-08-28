@@ -20,11 +20,7 @@ function isValidAccount (account, accountName, password) {
   const activeKeyFromAccount = account.active.key_auths[0][0];
   const postingKeyFromAccount = account.posting.key_auths[0][0];
   const memoKeyFromAccount = account.memo_key;
-  console.log("[BANTER] -------------------------------------------------------------------------");
-  console.log("[BANTER] owner pub key : ", ownerKeyFromAccount);
-  console.log("[BANTER] active pub key : ", activeKeyFromAccount);
-  console.log("[BANTER] posting pub key : ", postingKeyFromAccount);
-  console.log("[BANTER] memo pub key : ", memoKeyFromAccount);
+
   const ownerKey = dsteem.PrivateKey.fromLogin(accountName, password, 'owner');
   const activeKey = dsteem.PrivateKey.fromLogin(accountName, password, 'active');
   const postingKey = dsteem.PrivateKey.fromLogin(accountName, password, 'posting');
@@ -60,12 +56,11 @@ export const login = (accountName, password) => (dispatch, getState, { steemAPI 
 
   dsteemClient.database.call('get_accounts', [[accountName]])
     .then((_account) => {
-      console.log(`[BANTER] login _account search:`, _account);
       if(_account.length===0) {
-        console.log("[BANTER] login - There is no such ES account: ",_account);
+        console.log("[BANTER] login - There is no such account: ",_account);
       }
       else if(_account.length === 1) {
-        console.log("[BANTER] login - Found ES account - response: ",_account)
+        console.log("[BANTER] login - Found account - response: ",_account)
         localStorage.setItem('loginAccount', _account[0]);
 
         const isValidAcc = isValidAccount(_account[0], accountName, password);
