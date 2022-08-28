@@ -252,7 +252,7 @@ export default class LoginPage extends React.Component {
           <div className="settings-layout container">
             <div className="center">
               <h1 className={"banter-light"}>
-                login
+                Login
               </h1>
 
               <div className="Settings">
@@ -261,7 +261,7 @@ export default class LoginPage extends React.Component {
                     <Form.Item
                       label={
                         <span className="Editor__label banter-light">
-                        account name
+                        Account name
                       </span>
                       }
                     >
@@ -277,7 +277,7 @@ export default class LoginPage extends React.Component {
                     <Form.Item
                       label={
                         <span className="Editor__label banter-light">
-                        password
+                        Password
                       </span>
                       }
                     >
@@ -296,7 +296,7 @@ export default class LoginPage extends React.Component {
                     disabled={disabled}
                     className={`CommentForm__button ${buttonClass} `}
                   >
-                    login
+                    Login
                   </button>
                 </div>
                 {/*<Action primary big loading={loading} onClick={this.handleSave}>*/}

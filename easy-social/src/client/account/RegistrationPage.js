@@ -301,7 +301,7 @@ export default class RegistrationPage extends React.Component {
         <div className="settings-layout container">
           <div className="center">
             <h1 className={"banter-light"}>
-              register new account
+              Register new account
             </h1>
 
             <div className="Settings">
@@ -313,7 +313,7 @@ export default class RegistrationPage extends React.Component {
                   <Form.Item
                     label={
                         <span className="Editor__label">
-                          account name - to register use account based username up to 16 symbols.
+                          Account name - to register use account based username up to 16 symbols.
                         </span>
                     }
                   >
@@ -321,7 +321,7 @@ export default class RegistrationPage extends React.Component {
                       onChange={this.onUpdate}
                       onBlur={this.validateForm}
                       className="Editor__title"
-                      placeholder="account name"
+                      placeholder="Account name"
                       type="text"
                       name="accountName"
                     />
@@ -337,7 +337,7 @@ export default class RegistrationPage extends React.Component {
                   <Form.Item
                     label={
                       <span className="Editor__label">
-                      password
+                      Password
                     </span>
                     }
                   >
@@ -345,13 +345,13 @@ export default class RegistrationPage extends React.Component {
                       onChange={this.onUpdate}
                       onBlur={this.validateForm}
                       className="Editor__title"
-                      placeholder="password"
+                      placeholder="Password"
                       type="password"
                       name="password"
                     />
                     {/*{!this.props.availablePassword && pass.length > 0 ?*/}
                     {pass.length < 8 ?
-                      <div style={{color:"red"}}>incorrect password.
+                      <div style={{color:"red"}}>Incorrect password.
                       </div> : null}
                   </Form.Item>
 
@@ -359,7 +359,7 @@ export default class RegistrationPage extends React.Component {
                   <Form.Item
                     label={
                       <span className="Editor__label">
-                      confirm password
+                      Confirm password
                     </span>
                     }
                   >
@@ -371,7 +371,7 @@ export default class RegistrationPage extends React.Component {
                       name="confPassword"
                     />
                     {confPass !== pass && pass.length > 0 ?
-                      <div style={{color:"red"}}>confirm password.
+                      <div style={{color:"red"}}>Confirm password.
                       </div> : null}
                   </Form.Item>
 
@@ -381,7 +381,7 @@ export default class RegistrationPage extends React.Component {
                   disabled={disabled}
                   className={`CommentForm__button ${buttonClass}`}
                 >
-                  register
+                  Register
                 </button>
               </div>
                 : isSuccess}
